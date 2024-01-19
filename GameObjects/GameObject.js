@@ -12,8 +12,7 @@ class GameObject {
             left: this.x,
             right: this.x + this.width
         };
-        
-        this.gravity = 0.5;
+        this.gravity = 0.7;
         this.v = {
             x: 0,
             y: 0

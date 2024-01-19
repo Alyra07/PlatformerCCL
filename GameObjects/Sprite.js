@@ -6,9 +6,15 @@ class Sprite extends GameObject {
         super (x, y);
         this.image = new Image();
         this.image.src = imgSrc;
+
+        this.loaded = false;
+        this.image.onload = () => {
+            this.loaded = true;
+        }
     }
 
     draw() {
+        if (!this.loaded) return;
         ctx.drawImage(this.image, this.x, this.y, canvas.width, canvas.height);
     }
 };

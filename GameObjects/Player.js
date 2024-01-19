@@ -3,7 +3,7 @@ import { GameObject } from "./GameObject.js";
 
 class Player extends GameObject {
     constructor(x, y, width, height, color) {
-        super (x, y, width, height, color,);
+        super (x, y, width, height, color);
     }
 
     draw() {

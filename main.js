@@ -10,8 +10,9 @@ canvas.height = 768;
 // Player Figure
 const player = new Player(100, 100, 64, 64, "blue");
 
-// Level Background
+// Level Background Sprites
 const background1 = new Sprite(0, 0, "../img/map1.png"); 
+const background2 = new Sprite(0, 0, "../img/map2.png");
 
 // Keys pressed
 const keys = {
@@ -23,10 +24,8 @@ const keys = {
 // Game Loop
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "white";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
     background1.draw();
+
     // Player Controls a & d
     player.v.x = 0;
     if (keys.a) player.v.x = -5;
