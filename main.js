@@ -1,5 +1,6 @@
 import {Player} from "./GameObjects/Player.js";
 import {Sprite} from "./GameObjects/Sprite.js";
+import { collisionBlocks} from "./map/collisionUtils.js";
 
 // Canvas Setup
 const canvas = document.getElementById("canvas");
@@ -8,11 +9,10 @@ canvas.width = 1024;
 canvas.height = 768;
 
 // Player Figure
-const player = new Player(100, 100, 64, 64, "blue");
+const player = new Player(0, 0, 64, 64, {collisionBlocks: collisionBlocks});
 
 // Level Background Sprites
-const background1 = new Sprite(0, 0, "../img/map1.png"); 
-const background2 = new Sprite(0, 0, "../img/map2.png");
+const background1 = new Sprite(0, 0, "../img/map1.png");
 
 // Keys pressed
 const keys = {
@@ -25,6 +25,11 @@ const keys = {
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     background1.draw();
+
+    // Draw Collision Blocks
+    collisionBlocks.forEach((block) => {
+        block.draw();
+    });
 
     // Player Controls a & d
     player.v.x = 0;
