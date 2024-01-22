@@ -6,6 +6,13 @@ class CollisionBlock extends GameObject {
         super (x, y);
         this.width = 32;
         this.height = 32;
+
+        this.side = {
+            top: this.y,
+            bottom: this.y + this.height,
+            left: this.x,
+            right: this.x + this.width
+        };
     }
 
     draw() {

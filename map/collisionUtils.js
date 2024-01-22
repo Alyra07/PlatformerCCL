@@ -16,7 +16,6 @@ Array.prototype.createItems2D = function () {
          if(num !== 0) {
             items.push(new CollisionBlock(x*32, y*32));
          }
-         console.log(items);
       });
    })
    return items;
