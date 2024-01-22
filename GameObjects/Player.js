@@ -14,66 +14,67 @@ class Player extends GameObject {
     }
 
     update() {
+        // Gravity & Player velocity
+        this.v.y += this.gravity;
         this.x += this.v.x;
+        this.y += this.v.y;
 
-        // // Check for horizontal collisions
-        // for (let i = 0; i < this.collisionBlocks.length; i++) {
-        //     const block = this.collisionBlocks[i];
-
-        //     // Check if player is colliding with a block
-        //     if (this.x <= block.side.right &&
-        //         this.side.right >= block.x &&
-        //         this.side.bottom >= block.y &&
-        //         this.y <= block.side.bottom) {
-        //             // Collision on x-axis going to the right
-        //             if (this.v.x > 1) {
-        //                 console.log("Collision on x-axis going to the right");
-        //                 this.x = block.x - this.width - 0.01;
-        //                 break
-        //             }
-        //             // Collision on x-axis going to the left
-        //             if (this.v.x < -1) {
-        //                 this.x = block.side.right + 0.01;
-        //                 break
-        //             }
-        //     }
-        // }
-
-        this.y += this.v.y
-        this.side.bottom = this.y + this.height;
-
-        // Stay above bottom canvas edge
-        if (this.side.bottom + this.v.y < canvas.height) {
-            this.v.y += this.gravity;
-        } else {
-            this.v.y = 0
+        // Collision with the ground
+        if (this.y + this.height > canvas.height) {
+            this.y = canvas.height - this.height;
+            this.v.y = 0;
         }
 
-        // Check for vertical collisions
+        // Collision with the canvas edges
+        if (this.x < 0) {
+            this.x = 0;
+        }
+        if (this.x + this.width > canvas.width) {
+            this.x = canvas.width - this.width;
+        }
+        if (this.y < 0) {
+            this.y = 0;
+        }
+        if (this.y + this.height > canvas.height) {
+            this.y = canvas.height - this.height;
+            this.v.y = 0;
+        }
+
+        // Collision detection with Collision Blocks
         for (let i = 0; i < this.collisionBlocks.length; i++) {
             const block = this.collisionBlocks[i];
-
             // Check if player is colliding with a block
             if (this.x < block.side.right &&
                 this.x + this.width > block.side.left &&
                 this.y < block.side.bottom &&
                 this.y + this.height > block.side.top) {
-
                     console.log("colliding somehow")
-                    // // Collision on y-axis going downwards
-                    // if (this.v.y > 1) {
-                    //     console.log("Collision on y-axis going downwards");
-                    //     this.y = block.y - this.height - 0.01;
-                    //     this.v.y = 0;
-                    //     break;
-                    // }
-                    // // Collision on y-axis going upwards
-                    // if (this.v.y < -1) {
-                    //     console.log("Collision on y-axis going upwards");
-                    //     this.y = block.side.bottom + 0.01;
-                    //     this.v.y = 0;
-                    //     break;
-                    // }
+                    // Top collision
+                    if (this.v.y > 0 && this.y + this.height - this.v.y <= block.y) {
+                        this.v.y = 0;
+                        this.y = block.y - this.height;
+                    }
+                    // Bottom collision
+                    else if (
+                        this.v.y < 0 &&
+                        this.y - this.v.y >= block.y + block.height
+                    ) {
+                        this.v.y = 0;
+                        this.y = block.y + block.height;
+                    }
+                    // Left collision
+                    if (this.v.x > 0 && this.x + this.width - this.v.x <= block.x) {
+                        this.v.x = 0;
+                        this.x = block.x - this.width;
+                    }
+                    // Right collision
+                    else if (
+                        this.v.x < 0 &&
+                        this.x - this.v.x >= block.x + block.width
+                    ) {
+                        this.v.x = 0;
+                        this.x = block.x + block.width;
+                }     
             }
         }
     }
