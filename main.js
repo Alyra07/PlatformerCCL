@@ -9,7 +9,7 @@ canvas.width = 1024;
 canvas.height = 768;
 
 // Player Figure (x, y, width, height, {collisionBlocks})
-const player = new Player(canvas.width/2 - 32, canvas.height, 64, 64, {collisionBlocks: collisionBlocks});
+const player = new Player(canvas.width/2 - 48, 0, 64, 64, {collisionBlocks: collisionBlocks});
 
 // Background Sprite
 const background1 = new Sprite(0, 0, "../img/backgroundclouds.png");
