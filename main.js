@@ -8,13 +8,13 @@ const ctx = canvas.getContext("2d");
 canvas.width = 1024;
 canvas.height = 768;
 
-// Player Figure
-const player = new Player(0, 0, 64, 64, {collisionBlocks: collisionBlocks});
+// Player Figure (x, y, width, height, {collisionBlocks})
+const player = new Player(canvas.width/2 - 32, canvas.height, 64, 64, {collisionBlocks: collisionBlocks});
 
-// Level Background Sprites
-const background1 = new Sprite(0, 0, "../img/map1.png");
+// Background Sprite
+const background1 = new Sprite(0, 0, "../img/backgroundclouds.png");
 
-// Keys pressed
+// Keys pressed?
 const keys = {
     w: false,
     a: false,
