@@ -42,7 +42,7 @@ function gameLoop() {
     player.draw();
     player.update();
 
-    // Update and Draw Enemies
+    // Draw & Update Bird Enemies
     birdEnemies.handleBirds(2);
     birdEnemies.update();
 

@@ -12,7 +12,6 @@ class Enemy extends GameObject {
         this.fps = 20;
         this.frameInterval = 1000 / this.fps;
         this.frameTimer = 0;
-        this.enemies = [];
         this.enemyTimer = 0;
     }
 
