@@ -24,7 +24,7 @@ draw() {
 }
 
 update(deltaTime){
-    this.x += this.v.x;
+    this.x -= this.v.x;
     this.y += this.v.y;
     if (this.frameTimer > this.frameInterval) {
         this.frameTimer = 0;
@@ -42,8 +42,8 @@ update(deltaTime){
 class BirdEnemy extends Enemy {
     constructor(){
         super();
-        this.x = 200;
-        this.y = 200;
+        this.x = canvas.width;
+        this.y = Math.random() * (canvas.height - 100) + 50;
         this.width = 64;
         this.height = 44;
         this.v = {
@@ -60,6 +60,9 @@ class BirdEnemy extends Enemy {
 
     update(deltaTime){
         super.update(deltaTime)
+        this.enemies.forEach((bird) => {
+            bird.draw();
+        })
     };
 
     addBirds(){
@@ -75,7 +78,6 @@ class BirdEnemy extends Enemy {
         }
         this.enemies.forEach((bird) => {
             bird.update(deltaTime);
-            bird.draw(ctx);
         })
     };
 }
