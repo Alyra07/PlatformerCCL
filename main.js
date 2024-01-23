@@ -43,8 +43,7 @@ function gameLoop() {
     player.update();
 
     // Update and Draw Enemies
-    birdEnemies.addBirds();
-    birdEnemies.handleBirds();
+    birdEnemies.handleBirds(2);
     birdEnemies.update();
 
     requestAnimationFrame(gameLoop);

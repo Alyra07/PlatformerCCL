@@ -12,10 +12,8 @@ class Enemy extends GameObject {
         this.fps = 20;
         this.frameInterval = 1000 / this.fps;
         this.frameTimer = 0;
-
         this.enemies = [];
         this.enemyTimer = 0;
-        this.enemyInterval = 1000;
     }
 
 draw() {
@@ -23,7 +21,7 @@ draw() {
         this.x, this.y, this.width, this.height);
 }
 
-update(deltaTime){
+update(){
     this.x -= this.v.x;
     this.y += this.v.y;
     if (this.frameTimer > this.frameInterval) {
@@ -34,7 +32,7 @@ update(deltaTime){
             this.frame.x = 0;}
     }
     else {
-        this.frameTimer += deltaTime;
+        this.frameTimer += this.deltaTime;
     }
 }
 }
@@ -44,7 +42,7 @@ class BirdEnemy extends Enemy {
         super();
         this.x = canvas.width;
         this.y = Math.random() * (canvas.height - 100) + 50;
-        this.width = 64;
+        this.width = 60;
         this.height = 44;
         this.v = {
             x: 2,
@@ -52,10 +50,12 @@ class BirdEnemy extends Enemy {
         }
         this.image.src = "../img/enemy_bird.png";
         this.maxFrame = 5;
-
         this.enemies = [];
         this.enemyTimer = 0;
-        this.enemyInterval = 1000;
+
+        // Handle Bird Spawn Rate (Interval & Frequency)
+        this.enemyInterval = 100;
+        this.deltaTime = 10;
     }
 
     update(deltaTime){
