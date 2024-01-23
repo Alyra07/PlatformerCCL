@@ -1,6 +1,7 @@
 import {Player} from "./GameObjects/Player.js";
 import {Sprite} from "./GameObjects/Sprite.js";
 import { collisionBlocks} from "./map/collisionUtils.js";
+import {Enemy, BirdEnemy, GroundEnemy} from "./GameObjects/Enemy.js";
 
 // Canvas Setup
 const canvas = document.getElementById("canvas");
@@ -10,6 +11,7 @@ canvas.height = 768;
 
 // Player Figure (x, y, width, height, {collisionBlocks})
 const player = new Player(canvas.width/2 - 48, 0, 64, 64, {collisionBlocks: collisionBlocks});
+const birdEnemies = new BirdEnemy();
 
 // Background Sprite
 const background1 = new Sprite(0, 0, "../img/backgroundclouds.png");
@@ -39,6 +41,11 @@ function gameLoop() {
     // Update and Draw Player
     player.draw();
     player.update();
+
+    // Update and Draw Enemies
+    birdEnemies.addBirds();
+    birdEnemies.handleBirds();
+    birdEnemies.update();
 
     requestAnimationFrame(gameLoop);
 }
