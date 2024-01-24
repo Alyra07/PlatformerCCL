@@ -1,5 +1,5 @@
 import {CollisionBlock} from "../GameObjects/CollisionBlock.js";
-import {platformMap1} from "./map1.js";
+import {platformMap1} from "./mapData.js";
 
 Array.prototype.parse2D = function () {
     const rows = [];
