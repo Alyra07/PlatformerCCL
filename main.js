@@ -1,7 +1,7 @@
 import {Player} from "./GameObjects/Player.js";
 import {Sprite} from "./GameObjects/Sprite.js";
 import { collisionBlocks} from "./map/collisionUtils.js";
-import {Enemy, BirdEnemy, GroundEnemy} from "./GameObjects/Enemy.js";
+import {BirdEnemy, GroundEnemy} from "./GameObjects/Enemy.js";
 
 // Canvas Setup
 const canvas = document.getElementById("canvas");
@@ -10,8 +10,10 @@ canvas.width = 1024;
 canvas.height = 768;
 
 // Player Figure (x, y, width, height, {collisionBlocks})
-const player = new Player(canvas.width/2 - 48, 0, 64, 64, {collisionBlocks: collisionBlocks});
+const player = new Player(canvas.width/2 - 48, 0, 44, 44, {collisionBlocks: collisionBlocks});
+// Enemy Figures
 const birdEnemies = new BirdEnemy();
+const carEnemies = new GroundEnemy();
 
 // Background Sprite
 const background1 = new Sprite(0, 0, "../img/backgroundclouds.png");
@@ -45,6 +47,9 @@ function gameLoop() {
     // Draw & Update Bird Enemies
     birdEnemies.handleBirds(2);
     birdEnemies.update();
+    // Draw & Update Ground Enemies
+    carEnemies.handleCars(2);
+    carEnemies.update();
 
     requestAnimationFrame(gameLoop);
 }
@@ -55,7 +60,7 @@ window.addEventListener("keydown", (e) => {
     switch (e.key) {
         case "w":
             if (player.v.y === 0) {
-                player.v.y = -20;}
+                player.v.y = -15;}
             break;
         case "a":
             keys.a = true;

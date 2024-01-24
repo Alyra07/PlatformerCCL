@@ -40,7 +40,7 @@ class BirdEnemy extends Enemy {
     constructor(){
         super();
         this.x = canvas.width;
-        this.y = Math.random() * (canvas.height - 100) + 50;
+        this.y = Math.random() * (canvas.height - 200);
         this.width = 60;
         this.height = 44;
         this.v = {
@@ -82,7 +82,48 @@ class BirdEnemy extends Enemy {
 }
 
 class GroundEnemy extends Enemy {
+    constructor(){
+        super();
+        this.width = 60;
+        this.height = 87;
+        this.x = 0;
+        this.y = canvas.height - (this.height +32);
+        this.v = {
+            x: -3,
+            y: 0
+        }
+        this.image.src = "../img/enemy_plant.png";
+        this.maxFrame = 1;
+        this.enemies = [];
+        this.enemyTimer = 0;
 
+        // Handle Ground Enemy Spawn Rate (Interval & Frequency)
+        this.enemyInterval = 400;
+        this.deltaTime = 10;
+    }
+
+    update(deltaTime){
+        super.update(deltaTime)
+        this.enemies.forEach((enemy) => {
+            enemy.draw();
+        })
+    };
+
+    addCars(){
+        this.enemies.push(new GroundEnemy());
+    };
+
+    handleCars(deltaTime) {
+        if (this.enemyTimer > this.enemyInterval) {
+            this.addCars();
+            this.enemyTimer = 0;
+        } else {
+            this.enemyTimer += deltaTime;
+        }
+        this.enemies.forEach((car) => {
+            car.update(deltaTime);
+        })
+    };
 }
 
 export {Enemy, BirdEnemy, GroundEnemy}

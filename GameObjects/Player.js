@@ -40,7 +40,6 @@ class Player extends GameObject {
         
     }
 
-
     // Collision detection with Collision Blocks
         for (let i = 0; i < this.collisionBlocks.length; i++) {
             const block = this.collisionBlocks[i];
