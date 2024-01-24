@@ -54,7 +54,7 @@ class BirdEnemy extends Enemy {
     constructor(){
         super();
         this.x = canvas.width;
-        this.y = Math.random() * (canvas.height - 200);
+        this.y = Math.random() * (canvas.height - 200); // Randomize Bird Spawn Height
         this.width = 60;
         this.height = 44;
         this.v = {
@@ -71,9 +71,9 @@ class BirdEnemy extends Enemy {
         this.deltaTime = 10;
     }
 
-// Inherit movement from Enemy class and draw Birds
+    // Draw Bird Enemy for each Bird in Array
     update(deltaTime){
-        super.update(deltaTime)
+        super.update(deltaTime) // Movement & Sprite animation
         this.enemies.forEach((bird) => {
             bird.draw();
         })
@@ -82,7 +82,8 @@ class BirdEnemy extends Enemy {
     addBirds(){
         this.enemies.push(new BirdEnemy());
     };
-// Handle Bird Spawn Rate in gameLoop (Interval & Frame Rate)
+
+    // Handle Bird Spawn Rate in gameLoop (Interval & Frame Rate)
     handleBirds(deltaTime) {
         if (this.enemyTimer > this.enemyInterval) {
             this.addBirds();
@@ -94,7 +95,8 @@ class BirdEnemy extends Enemy {
             bird.update(deltaTime);
         })
     };
-// Delete Birds that are off screen or have collided with Player
+
+    // Delete Birds that are off screen or have collided with Player
     deleteEnemy() {
         this.enemies.forEach((enemy, index) => {
             if (enemy.x + enemy.width < 0 ||
@@ -110,7 +112,7 @@ class GroundEnemy extends Enemy {
         super();
         this.width = 60;
         this.height = 87;
-        this.x = 0;
+        this.x = 0 - this.width;
         this.y = canvas.height - (this.height +32);
         this.v = {
             x: -3,
@@ -125,9 +127,9 @@ class GroundEnemy extends Enemy {
         this.enemyInterval = 400;
         this.deltaTime = 10;
     }
-
+    // Draw Car for each GroundEnemy in Array
     update(deltaTime){
-        super.update(deltaTime)
+        super.update(deltaTime) // Movement & Sprite animation
         this.enemies.forEach((enemy) => {
             enemy.draw();
         })
@@ -136,7 +138,8 @@ class GroundEnemy extends Enemy {
     addCars(){
         this.enemies.push(new GroundEnemy());
     };
-// Handle Car Enemy Spawn Rate in gameLoop (Interval & Frame Rate)
+
+    // Handle Car Enemy Spawn Rate in gameLoop (Interval & Frame Rate)
     handleCars(deltaTime) {
         if (this.enemyTimer > this.enemyInterval) {
             this.addCars();
@@ -148,10 +151,11 @@ class GroundEnemy extends Enemy {
             car.update(deltaTime);
         })
     };
-// Delete Cars that are off screen or have collided with Player
+    
+    // Delete Cars that are off screen or have collided with Player
     deleteEnemy() {
         this.enemies.forEach((enemy, index) => {
-            if (enemy.x + enemy.width > canvas.width ||
+            if (enemy.x > canvas.width + enemy.width ||
                 enemy.markedForDeletion === true) {
                 this.enemies.splice(index, 1);
                 console.log(this.enemies);

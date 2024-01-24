@@ -29,8 +29,8 @@ class Player extends GameObject {
         this.staggerFrames = 5;
     }
 
+    // Access different Animation States & Frames on Player Spritesheet
     animate() { 
-        // Access different Animation States & Frames on Player Spritesheet
         animationStates.forEach((state, i) => {
             let frames = {loc: []};
             for (let j = 0; j < state.frames; j++) {
@@ -42,11 +42,10 @@ class Player extends GameObject {
         })
     }
 
+    // Call Sprite animation & draw the right frame of Player Spritesheet
     draw() {
         // ctx.fillStyle = "rgba( 0, 0, 0.0, 0.3)";
         // ctx.fillRect(this.x, this.y, this.width, this.height);
-
-        // Sprite animation & draw the right frame of Player Spritesheet
         this.animate();
         let position = Math.floor(this.gameFrame/this.staggerFrames) % spriteAnimations[this.playerState].loc.length;
         let frameX = this.sw * position;
@@ -74,8 +73,7 @@ class Player extends GameObject {
         // Bottom
         if (this.y + this.height > canvas.height) {
             this.y = canvas.height - this.height;
-            this.v.y = 0;
-        }
+            this.v.y = 0;}
 
     // Collision detection with Collision Blocks
         for (let i = 0; i < this.collisionBlocks.length; i++) {
