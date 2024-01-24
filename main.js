@@ -10,7 +10,7 @@ canvas.width = 1024;
 canvas.height = 768;
 
 // Player Figure (x, y, width, height, {collisionBlocks})
-const player = new Player(canvas.width/2 - 48, 0, 44, 44, {collisionBlocks: collisionBlocks});
+const player = new Player(canvas.width/2 - 48, 0, 50, 50, {collisionBlocks: collisionBlocks});
 // Enemy Figures
 const birdEnemies = new BirdEnemy();
 const carEnemies = new GroundEnemy();
