@@ -1,6 +1,17 @@
 import {canvas, ctx} from "../main.js";
 import { GameObject } from "./GameObject.js";
 
+// Player Sprite Animation States
+const animationStates = [
+    {name: "idle", frames: 7},
+    {name: "jump", frames: 7},
+    {name: "fall", frames: 7},
+    {name: "run", frames: 9},
+    {name: "dizzy", frames: 11}
+];
+const spriteAnimations = [];
+
+// ---- PLAYER CLASS ----
 class Player extends GameObject {
     constructor(x, y, width, height, {collisionBlocks = []}) {
         super (x, y, width, height);
@@ -12,25 +23,37 @@ class Player extends GameObject {
         this.sy = 0;
         this.sw = 575;
         this.sh = 523;
-        this.frameX = 0;
-        this.frameY = 0;
         this.gameFrame = 0;
-        // slow or speed up animation
+        this.playerState = "dizzy";
+        // Slow or speed up animation of Player Sprite
         this.staggerFrames = 5;
     }
 
+    animate() { 
+        // Access different Animation States & Frames on Player Spritesheet
+        animationStates.forEach((state, i) => {
+            let frames = {loc: []};
+            for (let j = 0; j < state.frames; j++) {
+                let positionX = this.sw * j;
+                let positionY = this.sh * i;
+                frames.loc.push({x: positionX, y: positionY});
+            }
+            spriteAnimations[state.name] = frames;
+        })
+    }
+
     draw() {
-        ctx.fillStyle = "rgba( 0, 0, 0.0, 0.3)";
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-        // Sprite animation
-        // if (this.gameFrame % this.staggerFrames === 0) {
-        //     if (this.frameX < 4) this.frameX++;
-        //     else this.frameX = 0;
-        // }
-        let position = Math.floor(this.gameFrame/this.staggerFrames) % 6;
-        this.frameX = this.sw * position;
+        // ctx.fillStyle = "rgba( 0, 0, 0.0, 0.3)";
+        // ctx.fillRect(this.x, this.y, this.width, this.height);
+
+        // Sprite animation & draw the right frame of Player Spritesheet
+        this.animate();
+        let position = Math.floor(this.gameFrame/this.staggerFrames) % spriteAnimations[this.playerState].loc.length;
+        let frameX = this.sw * position;
+        let frameY = spriteAnimations[this.playerState].loc[position].y;
+
         ctx.drawImage(this.image, 
-            this.frameX, this.frameY * this.sh, this.sw, this.sh, 
+            frameX, frameY, this.sw, this.sh, 
             this.x-6, this.y-10, this.width+12, this.height+10);
     }
 
