@@ -4,7 +4,6 @@ class GameObject {
         this.y = y;
         this.width = width;
         this.height = height;
-
         this.side = {
             top: this.y,
             bottom: this.y + this.height,

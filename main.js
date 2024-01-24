@@ -11,14 +11,14 @@ canvas.height = 768;
 
 // Player Figure (x, y, width, height, {collisionBlocks})
 const player = new Player(canvas.width/2 - 48, 0, 50, 50, {collisionBlocks: collisionBlocks});
-const playerSprite = new Sprite(player.x-10, player.y+10, "./img/playerDog.png", 0, 10, 1100, 1000);
+
 
 // Enemy Figures
 const birdEnemies = new BirdEnemy();
 const carEnemies = new GroundEnemy();
 
 // Background Sprite
-const background = new Sprite(0, 0, "../img/backgroundclouds.png", 0, 0, canvas.width, canvas.height);
+const backgroundImg = new Sprite(0, 0, "../img/backgroundclouds.png");
 
 // Keys pressed?
 const keys = {
@@ -27,12 +27,12 @@ const keys = {
     d: false
 };
 
-// Game Loop
+// ----- Game Loop -----
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    background.draw();
+    backgroundImg.draw();
 
-    // Draw Collision Blocks
+    // Draw Platform Collision Blocks
     collisionBlocks.forEach((block) => {
         block.draw();
     });
@@ -44,16 +44,20 @@ function gameLoop() {
 
     // Update and Draw Player
     player.draw();
-    // playerSprite.draw();
     player.update();
 
     // Draw & Update Bird Enemies
     birdEnemies.handleBirds(2);
     birdEnemies.update();
+    birdEnemies.checkCollision(player);
+    birdEnemies.deleteEnemy();  
     // Draw & Update Car Enemies
     carEnemies.handleCars(2);
     carEnemies.update();
+    carEnemies.checkCollision(player);
+    carEnemies.deleteEnemy();
 
+    player.gameFrame++;
     requestAnimationFrame(gameLoop);
 }
 gameLoop();
