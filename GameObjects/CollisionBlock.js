@@ -16,7 +16,7 @@ class CollisionBlock extends GameObject {
     }
 
     draw() {
-        ctx.fillStyle = 'rgba(255, 0, 0, 0.5)'
+        ctx.fillStyle = 'rgba(255, 0, 0, 0.0)'
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 };

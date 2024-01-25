@@ -17,7 +17,7 @@ const birdEnemies = new BirdEnemy();
 const carEnemies = new GroundEnemy();
 
 // Background Sprite
-const backgroundImg = new Sprite(0, 0, "../img/backgroundclouds.png");
+const backgroundImg = new Sprite(0, 0, "../img/background1.png");
 
 // Keys pressed?
 const keys = {
@@ -66,7 +66,7 @@ window.addEventListener("keydown", (e) => {
     switch (e.key) {
         case "w":
             if (player.v.y === 0) {
-                player.v.y = -15;}
+                player.v.y = -16;}
             break;
         case "a":
             keys.a = true;
