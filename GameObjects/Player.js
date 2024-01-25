@@ -47,6 +47,7 @@ class Player extends GameObject {
     draw() {
         // ctx.fillStyle = "rgba( 0, 0, 0.0, 0.3)";
         // ctx.fillRect(this.x, this.y, this.width, this.height);
+
         this.animate();
         let position = Math.floor(this.gameFrame/this.staggerFrames) % spriteAnimations[this.playerState].loc.length;
         let frameX = this.sw * position;

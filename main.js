@@ -84,10 +84,12 @@ function gameLoop() {
 // Event Listeners for Player Controls
 window.addEventListener("keydown", (e) => {
     switch (e.key) {
+        // Player States: idle, run, jump, fall, dizzy - not drawn yet :)
         case "w":
             if (player.v.y === 0) {
                 player.v.y = -16;
-                player.playerState = "jump";}
+                player.playerState = "jump";
+            }
             break;
         case "a":
             keys.a = true;
@@ -117,19 +119,20 @@ window.addEventListener("keyup", (e) => {
     }
 });
 
-// Game Over
+// Game Over Screen ----------------
 const gameOverScreen = document.getElementById("gameOverScreen");
 function gameOver () {
     gameStarted = false;
     gameOverScreen.style.display = "flex";
-    document.getElementById("score").innerHTML = birdEnemies.score;
+    document.getElementById("score").innerHTML = `Mr. Fluffington ate ${birdEnemies.score} Birds! Purrfect!`;
     player.playerState = "dizzy";
 };
 
-// Help Screen
+// Help Screen ---------------------
 const helpButton = document.getElementsByClassName("helpButton");
+const helpScreen = document.getElementById("helpScreen");
 function showHelp() {
-    helpButton.style.display = "block";
+    helpScreen.style.display = "flex";
 }
 function hideHelp() {
     helpButton.style.display = "none";
