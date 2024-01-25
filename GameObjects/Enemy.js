@@ -61,7 +61,7 @@ class BirdEnemy extends Enemy {
             x: 2,
             y: 0
         }
-        this.image.src = "../img/enemy_bird.png";
+        this.image.src = "../img/bird_spritesheet.png";
         this.maxFrame = 5;
         this.enemies = [];
         this.enemyTimer = 0;
@@ -108,24 +108,24 @@ class BirdEnemy extends Enemy {
 }
 
 class GroundEnemy extends Enemy {
-    constructor(){
+    constructor() {
         super();
-        this.width = 60;
-        this.height = 87;
+        this.width = 120;
+        this.height = 85;
         this.x = 0 - this.width;
         this.y = canvas.height - (this.height +32);
         this.v = {
             x: -3,
             y: 0
         }
-        this.image.src = "../img/enemy_plant.png";
+        this.image.src = "../img/car_spritesheet.png";
         this.maxFrame = 1;
         this.enemies = [];
         this.enemyTimer = 0;
 
         // Handle Car Enemy Spawn Rate (Interval & Frame Rate)
         this.enemyInterval = 400;
-        this.deltaTime = 10;
+        this.deltaTime = 3;
     }
     // Draw Car for each GroundEnemy in Array
     update(deltaTime){
