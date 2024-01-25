@@ -7,7 +7,23 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="gameOverScreen">
+        <h1>GAME OVER</h1>
+        <p id="score"></p>
+        <button id="restartButton" onclick="startGame()">Restart</button>
+        <button id="helpButtonGameOver" class="helpButton" onclick="showHelp()">How to Play</button>
+    </div>
     <canvas id="canvas"></canvas>
+
+    <div id="startScreen">
+        <button id="startButton" onclick="startGame()">START GAME</button>
+        <button id="helpButtonStart" class="helpButton" onclick="showHelp()">How to Play</button>
+    </div>
+
+    <div id="helpScreen">
+        <!-- Add help screen content -->
+        <button onclick="hideHelp()">Close</button>
+    </div>
     
     <script src="main.js" type="module"></script>
 </body>

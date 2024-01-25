@@ -16,6 +16,7 @@ class Player extends GameObject {
     constructor(x, y, width, height, {collisionBlocks = []}) {
         super (x, y, width, height);
         this.collisionBlocks = collisionBlocks;
+    
     // Player Spritesheet
         this.image = new Image();
         this.image.src = "../img/shadow_dog.png";
@@ -24,7 +25,7 @@ class Player extends GameObject {
         this.sw = 575;
         this.sh = 523;
         this.gameFrame = 0;
-        this.playerState = "dizzy";
+        this.playerState = "idle";
         // Slow or speed up animation of Player Sprite
         this.staggerFrames = 5;
     }

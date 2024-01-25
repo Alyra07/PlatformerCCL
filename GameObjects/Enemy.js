@@ -14,7 +14,7 @@ class Enemy extends GameObject {
         this.frameInterval = 1000 / this.fps;
         this.frameTimer = 0;
         this.enemyTimer = 0;
-        this.markedForDeletion = false;
+        this.collision = false;
     }
 
     draw() {
@@ -44,7 +44,7 @@ class Enemy extends GameObject {
             enemy.x + enemy.width > player.x &&
             enemy.y < player.y + player.height &&
             enemy.y + enemy.height > player.y) {
-                enemy.markedForDeletion = true;
+                enemy.collision = true;
             }
         })
     }
@@ -65,10 +65,11 @@ class BirdEnemy extends Enemy {
         this.maxFrame = 5;
         this.enemies = [];
         this.enemyTimer = 0;
-
         // Handle Bird Spawn Rate (Interval & Frame Rate)
         this.enemyInterval = 100;
         this.deltaTime = 10;
+        // Score (How many birds player has caught)
+        this.score = 0;
     }
 
     // Draw Bird Enemy for each Bird in Array
@@ -98,10 +99,12 @@ class BirdEnemy extends Enemy {
 
     // Delete Birds that are off screen or have collided with Player
     deleteEnemy() {
-        this.enemies.forEach((enemy, index) => {
-            if (enemy.x + enemy.width < 0 ||
-                enemy.markedForDeletion === true) {
+        this.enemies.forEach((bird, index) => {
+            if (bird.x + bird.width < 0) {
                 this.enemies.splice(index, 1);
+            } else if (bird.collision === true) {
+                this.enemies.splice(index, 1);
+                this.score++;
             }
         })
     }
@@ -118,11 +121,11 @@ class GroundEnemy extends Enemy {
             x: -3,
             y: 0
         }
+        this.collisionsGameOver = 3;
         this.image.src = "../img/car_spritesheet.png";
         this.maxFrame = 1;
         this.enemies = [];
         this.enemyTimer = 0;
-
         // Handle Car Enemy Spawn Rate (Interval & Frame Rate)
         this.enemyInterval = 400;
         this.deltaTime = 3;
@@ -130,8 +133,8 @@ class GroundEnemy extends Enemy {
     // Draw Car for each GroundEnemy in Array
     update(deltaTime){
         super.update(deltaTime) // Movement & Sprite animation
-        this.enemies.forEach((enemy) => {
-            enemy.draw();
+        this.enemies.forEach((car) => {
+            car.draw();
         })
     };
 
@@ -154,11 +157,13 @@ class GroundEnemy extends Enemy {
     
     // Delete Cars that are off screen or have collided with Player
     deleteEnemy() {
-        this.enemies.forEach((enemy, index) => {
-            if (enemy.x > canvas.width + enemy.width ||
-                enemy.markedForDeletion === true) {
+        this.enemies.forEach((car, index) => {
+            if (car.x > canvas.width + car.width) {
+                this.enemies.splice(index, 1);}
+            // Game Over if player collides with 3 cars in total
+            else if (car.collision === true) {
                 this.enemies.splice(index, 1);
-                console.log(this.enemies);
+                this.collisionsGameOver--;
             }
         })
     }
