@@ -26,6 +26,16 @@ canvas {
     z-index: 1; /* behind the startScreen */
 }
 
+#countdown {
+    font-size: 36px;  
+    font-family:Arial, Helvetica, sans-serif;
+    color: black;     
+    position: absolute;
+    top: 0px;       
+    left: 50%;       
+    transform: translateX(-50%);
+    z-index: 2;       /* Set a higher z-index to make sure it's above the canvas */
+  }
 
 #startScreen {
     position: absolute;

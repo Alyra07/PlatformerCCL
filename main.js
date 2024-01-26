@@ -30,6 +30,22 @@ const keys = {
     d: false
 };
 
+// Timer ------------------------
+let timeLeft = 60;
+let timerP = document.getElementById('countdown');
+let timerInterval;
+
+function updateTimer() {
+    timerP.innerText = timeLeft;
+    if (timeLeft === 0) {
+      // Time is up, reset the timer and stop the game
+      clearInterval(timerInterval);
+      gameOver();
+    } else {
+      timeLeft--;
+    }
+  }
+
 // Start Game Screen ---------------
 const startButton = document.getElementById("startButton");
 startButton.addEventListener("click", startGame);
@@ -38,8 +54,9 @@ let gameStarted = false;
 function startGame() {
         document.getElementById("startScreen").style.display = "none";
         gameStarted = true;
-    // Start Game Loop
+        // Start Gameloop
         requestAnimationFrame(gameLoop);
+        timerInterval = setInterval(updateTimer, 1000);
 }
 
 // Game Loop ----------------------
@@ -73,8 +90,9 @@ function gameLoop() {
         carEnemies.checkCollision(player);
         carEnemies.deleteEnemy();
     }
-    // Game Over if Player Collides with 3 Cars
+    // Game Over if Player Collides with Car or time runs out
     if (carEnemies.collisionsGameOver === 0) gameOver();
+    if (timeLeft === 0) gameOver();
 
     player.gameFrame++;
     requestAnimationFrame(gameLoop);

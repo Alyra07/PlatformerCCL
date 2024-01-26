@@ -121,7 +121,7 @@ class GroundEnemy extends Enemy {
             x: -3,
             y: 0
         }
-        this.collisionsGameOver = 3;
+        this.collisionsGameOver = 1;
         this.image.src = "../img/car_spritesheet.png";
         this.maxFrame = 1;
         this.enemies = [];
@@ -160,9 +160,9 @@ class GroundEnemy extends Enemy {
         this.enemies.forEach((car, index) => {
             if (car.x > canvas.width + car.width) {
                 this.enemies.splice(index, 1);}
-            // Game Over if player collides with 3 cars in total
+            // Game Over if player collides with a car
             else if (car.collision === true) {
-                this.enemies.splice(index, 1);
+                // this.enemies.splice(index, 1);
                 this.collisionsGameOver--;
             }
         })
