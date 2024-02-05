@@ -17,11 +17,9 @@ function spawnPlatform() {
   const y = Math.random() * canvas.height;  // Random y position
 
   const platform = new Platform(canvas.width, y, 96, 32, "red", 2);
-
   // Add the new platform to the game's list of platforms
   platforms.push(platform);
 }
-
 // Spawn a new platform every 2 seconds
 setInterval(spawnPlatform, 2000);
 
@@ -74,4 +72,4 @@ function gameLoop() {
 // Start the game loop
 gameLoop();
 
-export { canvas, ctx };  // Export canvas for use in other files 
+export { canvas, ctx };

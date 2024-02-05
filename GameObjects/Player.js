@@ -1,6 +1,9 @@
 // Player.js
 import { canvas, ctx } from '../game.js';
 
+const jumpSpeed = -15;
+const gravity = 0.5;
+
 class Player {
   constructor(x, y, width, height, color) {
     this.x = x;
@@ -13,27 +16,26 @@ class Player {
       y: 0
     };
     this.speed = 5;  // Adjust the moving speed of the player
-    this.gravity = 0.5;
+    this.grounded = false;
   }
 
   moveRight() {
     this.v.x = this.speed;
-  };
+  }
 
   moveLeft() {
     this.v.x = -this.speed;
-  };
+  }
 
   stopHorizontalMovement() {
     this.v.x = 0;
-  };
+  }
 
   jump() {
-    // Check if the player is close to the ground (with a margin for floating-point precision)
-    if (this.y + this.height >= canvas.height - 1) {
-      this.v.y = -15;  // Set vertical velocity to make the player jump
+    if (this.grounded) {
+      this.v.y = jumpSpeed;
     }
-  };
+  }
 
   isCollidingWith(platform) {
     return this.x < platform.x + platform.width &&
@@ -42,23 +44,18 @@ class Player {
            this.y + this.height > platform.y;
   };
 
-  update(platforms) {
-    // Update position based on velocity
+  handleCollision(platform) {
+    this.y = platform.y - this.height;
+    this.v.y = 0;
+    this.grounded = true;
+  }
+
+  updatePosition() {
     this.x += this.v.x;
     this.y += this.v.y;
-    
-    // Check for collision with platforms
-    for (let i = 0; i < platforms.length; i++) {
-        if (this.isCollidingWith(platforms[i])) {
-              // Collision detected, adjust player position and velocity
-              this.y = platforms[i].y - this.height;
-              this.v.y = 0;
-        }
-    }
-    // Simulate gravity by increasing vertical velocity
-    this.v.y += this.gravity;
+  }
 
-    // Keep the player within the canvas bounds
+  checkBounds() {
     if (this.x < 0) {
       this.x = 0;
     } else if (this.x + this.width > canvas.width) {
@@ -67,8 +64,27 @@ class Player {
 
     if (this.y > canvas.height - this.height) {
       this.y = canvas.height - this.height;
-      this.v.y = 0;  // Reset vertical velocity when on the ground
+      this.v.y = 0;
+      this.grounded = true;
     }
+  };
+
+  update(platforms) {
+    this.v.y += gravity;
+    this.grounded = false;
+
+    let nextX = this.x + this.v.x;
+    let nextY = this.y + this.v.y;
+
+    for (const platform of platforms) {
+      if (this.isCollidingWith(platform, nextX, nextY)) {
+        this.handleCollision(platform);
+        break;
+      }
+    }
+
+    this.updatePosition();
+    this.checkBounds();
   };
 
   draw() {
