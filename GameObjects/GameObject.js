@@ -1,5 +1,3 @@
-import { ctx } from '../game.js';
-
 class GameObject {
     constructor(x, y, width, height, color) {
         this.x = x;
@@ -13,11 +11,6 @@ class GameObject {
             left: this.x,
             right: this.x + this.width
         };
-    }
-
-    draw() {
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 }
 
