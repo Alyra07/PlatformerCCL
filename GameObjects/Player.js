@@ -18,35 +18,35 @@ class Player {
 
   moveRight() {
     this.v.x = this.speed;
-  }
+  };
 
   moveLeft() {
     this.v.x = -this.speed;
-  }
+  };
 
   stopHorizontalMovement() {
     this.v.x = 0;
-  }
+  };
 
   jump() {
     // Check if the player is close to the ground (with a margin for floating-point precision)
     if (this.y + this.height >= canvas.height - 1) {
       this.v.y = -15;  // Set vertical velocity to make the player jump
     }
-  }
+  };
 
   isCollidingWith(platform) {
     return this.x < platform.x + platform.width &&
            this.x + this.width > platform.x &&
            this.y < platform.y + platform.height &&
            this.y + this.height > platform.y;
-  }
+  };
 
   update(platforms) {
     // Update position based on velocity
     this.x += this.v.x;
     this.y += this.v.y;
-
+    
     // Check for collision with platforms
     for (let i = 0; i < platforms.length; i++) {
         if (this.isCollidingWith(platforms[i])) {
@@ -55,7 +55,6 @@ class Player {
               this.v.y = 0;
         }
     }
-
     // Simulate gravity by increasing vertical velocity
     this.v.y += this.gravity;
 
@@ -70,12 +69,12 @@ class Player {
       this.y = canvas.height - this.height;
       this.v.y = 0;  // Reset vertical velocity when on the ground
     }
-  }
+  };
 
   draw() {
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
-  }
+  };
 }
 
 export { Player };
