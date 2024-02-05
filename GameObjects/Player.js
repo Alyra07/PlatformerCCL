@@ -35,10 +35,26 @@ class Player {
     }
   }
 
-  update() {
+  isCollidingWith(platform) {
+    return this.x < platform.x + platform.width &&
+           this.x + this.width > platform.x &&
+           this.y < platform.y + platform.height &&
+           this.y + this.height > platform.y;
+  }
+
+  update(platforms) {
     // Update position based on velocity
     this.x += this.v.x;
     this.y += this.v.y;
+
+    // Check for collision with platforms
+    for (let i = 0; i < platforms.length; i++) {
+        if (this.isCollidingWith(platforms[i])) {
+              // Collision detected, adjust player position and velocity
+              this.y = platforms[i].y - this.height;
+              this.v.y = 0;
+        }
+    }
 
     // Simulate gravity by increasing vertical velocity
     this.v.y += this.gravity;

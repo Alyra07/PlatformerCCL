@@ -11,7 +11,7 @@ canvas.height = 768;
 const player = new Player(50, canvas.height - 50, 20, 20, '#3498db');
 
 // Platforms
-const platforms = [];
+let platforms = [];
 
 function spawnPlatform() {
   const y = Math.random() * canvas.height;  // Random y position
@@ -58,7 +58,7 @@ function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Update and draw player
-  player.update();
+  player.update(platforms);
   player.draw();
 
   // Update and draw platforms
@@ -74,4 +74,4 @@ function gameLoop() {
 // Start the game loop
 gameLoop();
 
-export { canvas, ctx };  // Export canvas for use in other files
+export { canvas, ctx };  // Export canvas for use in other files 
