@@ -7,11 +7,10 @@ const ctx = canvas.getContext('2d');
 canvas.width = 1024;
 canvas.height = 768;
 
-// Player
-const player = new Player(50, canvas.height - 50, 20, 20, '#3498db');
-
 // Platforms
 let platforms = [];
+// Player
+const player = new Player(50, canvas.height - 50, 20, 20, 'blue', {collisionBlocks: platforms});
 
 function spawnPlatform() {
   const y = Math.random() * canvas.height;  // Random y position
@@ -21,7 +20,7 @@ function spawnPlatform() {
   platforms.push(platform);
 }
 // Spawn a new platform every 2 seconds
-setInterval(spawnPlatform, 2000);
+setInterval(spawnPlatform, 1000);
 
 // Keep track of pressed keys
 const keys = {
@@ -31,10 +30,6 @@ const keys = {
 
 document.addEventListener('keydown', (event) => {
   keys[event.key] = true;
-
-  if (event.key === 'ArrowUp') {
-    player.jump();
-  }
   if (event.key === 'ArrowRight') {
     player.moveRight();
   }
@@ -55,15 +50,15 @@ document.addEventListener('keyup', (event) => {
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Update and draw player
-  player.update(platforms);
-  player.draw();
-
   // Update and draw platforms
   for (let i = 0; i < platforms.length; i++) {
     platforms[i].update();
     platforms[i].draw();
   }
+
+  // Update and draw player
+  player.update();
+  player.draw();
 
   // Request next frame
   requestAnimationFrame(gameLoop);
