@@ -2,9 +2,21 @@
 import { canvas, ctx } from '../game.js';
 import { GameObject } from './GameObject.js';
 
+// Player Physics Constants
 const jumpSpeed = -15;
 const gravity = 0.5;
 
+// Player Sprite Animation States
+const animationStates = [
+    {name: "idle", frames: 7},
+    {name: "jump", frames: 7},
+    {name: "fall", frames: 7},
+    {name: "run", frames: 9},
+    {name: "dizzy", frames: 11}
+];
+const spriteAnimations = [];
+
+// Player Class --------------------------------------------------------------
 class Player extends GameObject {
     constructor(x, y, width, height, color, { collisionBlocks = [] }) {
         super(x, y, width, height);
@@ -17,21 +29,62 @@ class Player extends GameObject {
         this.grounded = false;
         this.collisionBlocks = collisionBlocks;
 
-        // Bind the draw method to this instance
-        this.draw = this.draw.bind(this);
+        // Player Spritesheet
+        this.image = new Image();
+        this.image.src = "../img/shadow_dog.png";
+        this.sx = 0; // Source x & y position
+        this.sy = 0;
+        this.sw = 575; // Source width & height
+        this.sh = 523;
+        this.gameFrame = 0;
+        this.playerState = "idle"; // initial Animarion State
+        // Slow or speed up animation of Player Sprite
+        this.staggerFrames = 5;
     }
 
+    // Access different Animation States & Frames on Player Spritesheet
+    animate() { 
+        animationStates.forEach((state, i) => {
+            let frames = {loc: []};
+            for (let j = 0; j < state.frames; j++) {
+                let positionX = this.sw * j;
+                let positionY = this.sh * i;
+                frames.loc.push({x: positionX, y: positionY});
+            }
+            spriteAnimations[state.name] = frames;
+        })
+    }
+
+    // Call Sprite animation & draw the correct frame
     draw() {
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        this.animate();
+        let position = Math.floor(this.gameFrame/this.staggerFrames) % spriteAnimations[this.playerState].loc.length;
+        let frameX = this.sw * position;
+        let frameY = spriteAnimations[this.playerState].loc[position].y;
+    
+        ctx.save(); // Save current state of canvas-context
+        // If the player is moving to the left, flip the context
+        if (this.v.x < 0) {
+            ctx.scale(-1, 1);
+            ctx.drawImage(this.image, 
+                frameX, frameY, this.sw, this.sh, 
+                -this.x-6-this.width-12, this.y-10, this.width+12, this.height+10);
+        } else {
+            ctx.drawImage(this.image, 
+                frameX, frameY, this.sw, this.sh, 
+                this.x-6, this.y-10, this.width+12, this.height+10);
+        }
+        ctx.restore(); // Restore the context to its saved state
     }
 
     moveRight() {
         this.v.x = this.speed;
+        this.playerState = "run";
     }
 
     moveLeft() {
         this.v.x = -this.speed;
+        this.playerState = "run";	
     }
 
     stopHorizontalMovement() {
@@ -40,6 +93,7 @@ class Player extends GameObject {
 
     jump() {
         if (this.grounded) {
+            this.playerState = "jump";
             this.v.y = jumpSpeed;
         }
     }
@@ -49,13 +103,14 @@ class Player extends GameObject {
         this.y += this.v.y;
     }
 
+    // Check if player is out of canvas bounds
     checkBounds() {
         if (this.x < 0) {
             this.x = 0;
         } else if (this.x + this.width > canvas.width) {
             this.x = canvas.width - this.width;
         }
-
+        // If player is on ground, stop falling
         if (this.y > canvas.height - this.height) {
             this.y = canvas.height - this.height;
             this.v.y = 0;
@@ -71,7 +126,7 @@ class Player extends GameObject {
     };
 
     handleCollision(platform) {
-        // Only handle the collision if the player is above the platform
+        // Only handle collision if the player is above the platform
         if (this.y + this.height <= platform.y + platform.height) {
             this.y = platform.y - this.height;
             this.v.y = 0;
@@ -80,21 +135,19 @@ class Player extends GameObject {
     }
 
     update() {
+        // Apply gravity
         this.v.y += gravity;
         this.grounded = false;
-
+        // Check for collisions with platforms
         for (const platform of this.collisionBlocks) {
             if (this.isCollidingWith(platform)) {
                 this.handleCollision(platform);
                 break;
             }
         }
-
         // Update the player's position
         this.updatePosition();
-
         this.checkBounds();
-
         // If the player is grounded, make them jump
         if (this.grounded) {
             this.jump();
