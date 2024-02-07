@@ -23,21 +23,30 @@ const carEnemies = new GroundEnemy();
 // Create backgroundImg using Sprite
 const backgroundImg = new Sprite(0, 0, './img/backgroundclouds.png');
 
-// Spawn a new platform every 2 seconds (setInterval)
+// Spawn Platform every second
+let lastPlatformY = null;
+
 function spawnPlatform() {
-  const y = Math.random() * canvas.height;  // Random y position
-  const platform = new Platform(canvas.width, y, 96, 32, "red", 2);
+  let y;
+  do {
+    // Random y position between canvas.height - 120 and y = 120
+    y = Math.random() * (canvas.height - 240) + 120;
+    // New platform every 100 pixels on y-axis
+  } while (lastPlatformY !== null && Math.abs(lastPlatformY - y) < 100);
+
   // Add the new platform to the array
+  const platform = new Platform(canvas.width, y, 96, 32, "red", 2);
   platforms.push(platform);
+  lastPlatformY = y;
 }
 setInterval(spawnPlatform, 1000);
 
-// Keys & Player movement Events
+// Keys
 const keys = {
   ArrowRight: false,
   ArrowLeft: false
 };
-
+// Event Listeners for player movement
 document.addEventListener('keydown', (event) => {
   keys[event.key] = true;
   if (event.key === 'ArrowRight') {
@@ -49,7 +58,6 @@ document.addEventListener('keydown', (event) => {
 });
 document.addEventListener('keyup', (event) => {
   keys[event.key] = false;
-
   if (!keys.ArrowRight && !keys.ArrowLeft) {
     player.stopHorizontalMovement();
   }
@@ -87,3 +95,4 @@ function gameLoop() {
 gameLoop();
 
 export { canvas, ctx };
+export { birdEnemies };

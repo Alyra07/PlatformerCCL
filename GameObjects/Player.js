@@ -69,7 +69,7 @@ class Player extends GameObject {
             ctx.drawImage(this.image, 
                 frameX, frameY, this.sw, this.sh, 
                 -this.x-6-this.width-12, this.y-10, this.width+12, this.height+10);
-        } else {
+        } else { // Draw the player normally
             ctx.drawImage(this.image, 
                 frameX, frameY, this.sw, this.sh, 
                 this.x-6, this.y-10, this.width+12, this.height+10);
@@ -111,12 +111,12 @@ class Player extends GameObject {
             this.x = canvas.width - this.width;
         }
         // If player is on ground, stop falling
-        if (this.y > canvas.height - this.height) {
-            this.y = canvas.height - this.height;
+        if (this.y > canvas.height - this.height - 32) {
+            this.y = canvas.height - this.height - 32;
             this.v.y = 0;
             this.grounded = true;
         }
-    };
+    }
 
     isCollidingWith(platform) {
         return this.x < platform.x + platform.width &&

@@ -1,5 +1,6 @@
 import {GameObject} from "./GameObject.js";
 import {ctx, canvas} from "../game.js";
+import {updateScore} from "../out-of-canvas/scoreboard.js";
 
 class Enemy extends GameObject {
     constructor(){
@@ -69,7 +70,7 @@ class BirdEnemy extends Enemy {
         this.enemyInterval = 100;
         this.deltaTime = 10;
         // Score (How many birds player has caught)
-        this.score = 0;
+        this.playerScore = 0;
     }
 
     // Draw Bird Enemy for each Bird in Array
@@ -103,8 +104,10 @@ class BirdEnemy extends Enemy {
             if (bird.x + bird.width < 0) {
                 this.enemies.splice(index, 1);
             } else if (bird.collision === true) {
+                // if player catches bird, delete bird & increment score
                 this.enemies.splice(index, 1);
-                this.score++;
+                this.playerScore++;
+                updateScore();
             }
         })
     }
