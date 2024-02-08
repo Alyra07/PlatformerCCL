@@ -1,6 +1,6 @@
 // game.js
 import { Player } from './GameObjects/Player.js';
-import { Platform } from './GameObjects/Platform.js';
+import { platforms } from './GameObjects/Platform.js';
 import { BirdEnemy, GroundEnemy } from './GameObjects/Enemy.js';
 import { Sprite } from './GameObjects/Sprite.js';
 
@@ -10,42 +10,22 @@ const ctx = canvas.getContext('2d');
 canvas.width = 1024;
 canvas.height = 768;
 
-// Array for all platforms
-let platforms = [];
+// Game Objects
 
-// Player Figure
 const player = new Player(50, canvas.height - 50, 50, 50, 'blue', {collisionBlocks: platforms});
 
-// Create BirdEnemy and GroundEnemy
 const birdEnemies = new BirdEnemy();
 const carEnemies = new GroundEnemy();
 
-// Create backgroundImg using Sprite
 const backgroundImg = new Sprite(0, 0, './img/backgroundclouds.png');
 
 // Spawn Platform every second
-let lastPlatformY = null;
-
-function spawnPlatform() {
-  let y;
-  do {
-    // Random y position between canvas.height - 120 and y = 120
-    y = Math.random() * (canvas.height - 240) + 120;
-    // New platform every 100 pixels on y-axis
-  } while (lastPlatformY !== null && Math.abs(lastPlatformY - y) < 100);
-
-  // Add the new platform to the array
-  const platform = new Platform(canvas.width, y, 96, 32, "red", 2);
-  platforms.push(platform);
-  lastPlatformY = y;
-}
-setInterval(spawnPlatform, 1000);
 
 // Keys
 const keys = {
   ArrowRight: false,
-  ArrowLeft: false
-};
+  ArrowLeft: false, };
+
 // Event Listeners for player movement
 document.addEventListener('keydown', (event) => {
   keys[event.key] = true;

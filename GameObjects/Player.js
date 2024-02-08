@@ -94,8 +94,7 @@ class Player extends GameObject {
     jump() {
         if (this.grounded) {
             this.playerState = "jump";
-            this.v.y = jumpSpeed;
-        }
+            this.v.y = jumpSpeed; }
     }
 
     updatePosition() {
