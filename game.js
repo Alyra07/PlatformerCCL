@@ -17,7 +17,8 @@ const player = new Player(50, canvas.height - 50, 50, 50, 'blue', {collisionBloc
 const birdEnemies = new BirdEnemy();
 const carEnemies = new GroundEnemy();
 
-const backgroundImg = new Sprite(0, 0, './img/backgroundclouds.png');
+// Contant images
+const backgroundImg = new Sprite(0, 0, canvas.width, canvas.height, './img/backgroundclouds.png');
 
 // Spawn Platform every second
 
