@@ -63,7 +63,7 @@ function gameLoop() {
   birdEnemies.checkCollision(player);
   birdEnemies.deleteEnemy();
   // Draw & Update Car Enemies
-  carEnemies.handleCars(2);
+  carEnemies.handleCars(3);
   carEnemies.update();
   carEnemies.checkCollision(player);
   carEnemies.deleteEnemy();
