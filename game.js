@@ -18,7 +18,7 @@ const birdEnemies = new BirdEnemy();
 const carEnemies = new GroundEnemy();
 
 // Contant images
-const backgroundImg = new Sprite(0, 0, canvas.width, canvas.height, './img/backgroundclouds.png');
+const backgroundImg = new Sprite(0, 0, canvas.width, canvas.height, './img/background.png');
 
 // Spawn Platform every second
 

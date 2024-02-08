@@ -7,16 +7,50 @@ let lastPlatformY = null;
 let spawnInterval = 1000;
 let spawnId = null;
 
+// Platform Class --------------------------------------------------------------
+
 class Platform extends GameObject {
   constructor(x, y, width, height, color, speed) {
     super(x, y, width, height, color);
     this.speed = speed;
     this.lastPlatformY = null;
+    
+    // Load cloud-platform images
+    this.platformImages = [
+      new Image(),
+      new Image(),
+      new Image()
+    ];
+    this.platformImages[0].src = '../img/cloud1_w240.png';
+    this.platformImages[1].src = '../img/cloud2_w218.png';
+    this.platformImages[2].src = '../img/cloud3_w185_h37.png';
+    // Choose a random image and decide whether to mirror it
+    this.img = this.platformImages[Math.floor(Math.random() * this.platformImages.length)];
+    this.mirror = Math.random() < 0.5;
   }
 
   draw() {
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
+    this.drawPlatformImage();
+  }
+
+  drawPlatformImage() {
+    const imgWidth = this.width * 1.5; // Increase width by 50%
+    const imgHeight = this.height * 1.5; // Increase height by 50%
+    const imgX = this.x - imgWidth / 5; // Move the image to the left
+
+    ctx.save();
+    if (this.mirror) {
+      // Flip the context on the vertical axis
+      ctx.translate(imgX + imgWidth, 0);
+      ctx.scale(-1, 1);
+      ctx.drawImage(this.img, 0, this.y, imgWidth, imgHeight);
+    } else {
+      // Draw the image on the platform
+      ctx.drawImage(this.img, imgX, this.y, imgWidth, imgHeight);
+    }
+    ctx.restore();
   }
 
   update() {
@@ -40,7 +74,7 @@ function spawnPlatform() {
   } while (lastPlatformY !== null && Math.abs(lastPlatformY - y) < 50);
 
   // Add the new platform to the array
-  const platform = new Platform(x, y, 96, 32, "red", 2);
+  const platform = new Platform(x, y, 128, 32, `rgba(117, 69, 132, 0.3)`, 2);
   platforms.push(platform);
   lastPlatformY = y;
 
