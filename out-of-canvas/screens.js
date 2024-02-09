@@ -14,8 +14,8 @@ const score = document.getElementById('score');
 const time = document.getElementById('timer');
 // Game Over Screen
 const gameOverScreen = document.getElementById('game-over-screen');
-let finalScore = document.getElementById('final-score');
-let finalTime = document.getElementById('final-time');
+const finalScore = document.getElementById('final-score');
+const finalTime = document.getElementById('final-time');
 const restartBtn = document.getElementById('restart-btn');
 const backBtnGameOver = document.getElementById('back-btn-end');
 let gameIsOver = true; // enables gameOverLoop in game.js

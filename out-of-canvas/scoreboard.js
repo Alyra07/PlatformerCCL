@@ -10,7 +10,7 @@ function startTimer() {
   counter = 0;
   timer = setInterval(() => {
     // Clear timer when game is over
-    if (time.innerText === '05:00' || gameIsOver) {
+    if (time.innerText === '02:00' || gameIsOver) {
       clearInterval(timer);
       gameOver();
     } else { 

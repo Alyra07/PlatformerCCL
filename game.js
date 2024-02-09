@@ -61,7 +61,7 @@ function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   backgroundImg.draw();
 
-  // Game Over if player collides with a car
+// Game Over if player collides with a car
   if (carEnemies.collisionsGameOver === 0 || gameIsOver) {
     gameOver(); // show game over screen
     player.dead = true; // stop player movement
