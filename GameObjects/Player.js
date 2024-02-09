@@ -161,7 +161,7 @@ class Player extends GameObject {
         this.updatePosition();
         this.checkBounds();
         // If the player is grounded, make them jump
-        if (this.grounded && !this.dead) { // Added condition to check if player is dead
+        if (this.grounded && !this.dead) { // If player.dead, stop jumping
             this.jump();
         }
         // If the player is falling, set playerState to "fall"
