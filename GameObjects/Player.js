@@ -1,7 +1,11 @@
-import {canvas, ctx} from "../main.js";
-import { GameObject } from "./GameObject.js";
+import { canvas, ctx } from '../game.js';
+import { GameObject } from './GameObject.js';
 
-// Player Sprite Animation States
+// Player Physics Constants
+const jumpSpeed = -15;
+const gravity = 0.5;
+
+// Player Sprite Animation States & Frames
 const animationStates = [
     {name: "idle", frames: 7},
     {name: "jump", frames: 7},
@@ -11,21 +15,29 @@ const animationStates = [
 ];
 const spriteAnimations = [];
 
-// ---- PLAYER CLASS ----
+// Player Class --------------------------------------------------------------
 class Player extends GameObject {
-    constructor(x, y, width, height, {collisionBlocks = []}) {
-        super (x, y, width, height);
+    constructor(x, y, width, height, color, { collisionBlocks = [] }) {
+        super(x, y, width, height);
+        this.color = color;
+        this.v = {
+            x: 0,
+            y: 0
+        };
+        this.speed = 5;  // Adjust the moving speed of the player
+        this.grounded = false;
         this.collisionBlocks = collisionBlocks;
-    
-    // Player Spritesheet
+        this.dead = false; // Player alive per default
+
+        // Player Spritesheet
         this.image = new Image();
-        this.image.src = "../img/shadow_dog.png";
-        this.sx = 0;
+        this.image.src = "../img/player_sprite.png";
+        this.sx = 0; // Source x & y position
         this.sy = 0;
-        this.sw = 575;
+        this.sw = 575; // Source width & height
         this.sh = 523;
         this.gameFrame = 0;
-        this.playerState = "idle";
+        this.playerState = "idle"; // startScreen Animation State
         // Slow or speed up animation of Player Sprite
         this.staggerFrames = 5;
     }
@@ -42,78 +54,125 @@ class Player extends GameObject {
             spriteAnimations[state.name] = frames;
         })
     }
+    updateGameFrame() {
+        this.gameFrame++;
+        if (this.gameFrame > spriteAnimations[this.playerState].loc.length * this.staggerFrames) {
+          this.gameFrame = 0;
+        }
+    }
 
-    // Call Sprite animation & draw the right frame of Player Spritesheet
+    // Call Sprite animation & draw the correct frame
     draw() {
-        // ctx.fillStyle = "rgba( 0, 0, 0.0, 0.3)";
-        // ctx.fillRect(this.x, this.y, this.width, this.height);
-
         this.animate();
-        let position = Math.floor(this.gameFrame/this.staggerFrames) % spriteAnimations[this.playerState].loc.length;
+        this.updateGameFrame(); // next frame
+        let position = Math.floor(this.gameFrame / this.staggerFrames) % spriteAnimations[this.playerState].loc.length;
         let frameX = this.sw * position;
         let frameY = spriteAnimations[this.playerState].loc[position].y;
+    
+        ctx.save(); // Save current state of canvas-context
+        // If the player is moving to the left, flip the context
+        if (this.v.x < 0) {
+            ctx.scale(-1, 1);
+            ctx.drawImage(this.image, 
+                frameX, frameY, this.sw, this.sh, 
+                -this.x-6-this.width-12, this.y-10, this.width+12, this.height+10);
+        } else { // Draw the player normally
+            ctx.drawImage(this.image, 
+                frameX, frameY, this.sw, this.sh, 
+                this.x-6, this.y-10, this.width+12, this.height+10);
+        }
+        ctx.restore(); // Restore the context to its saved state
+    }
 
-        ctx.drawImage(this.image, 
-            frameX, frameY, this.sw, this.sh, 
-            this.x-6, this.y-10, this.width+12, this.height+10);
+    moveRight() {
+        if (!this.dead) { // check if player is dead -> cannot move while dead
+            this.v.x = this.speed;
+            if (this.playerState !== "fall") this.playerState = "run";
+        }
+    }
+
+    moveLeft() {
+        if (!this.dead) { 
+            this.v.x = -this.speed;
+            if (this.playerState !== "fall") this.playerState = "run";
+        }
+    }
+
+    stopHorizontalMovement() {
+        this.v.x = 0;
+    }
+
+    jump() { // jumps constantly if moved while alive
+        if (this.grounded && !this.dead 
+            && this.playerState !== "idle") {
+            this.playerState = "jump";
+            this.v.y = jumpSpeed;
+        }
+    }
+
+    updatePosition() {
+        this.x += this.v.x;
+        this.y += this.v.y;
+    }
+
+    // Check if player is out of canvas bounds
+    checkBounds() {
+        if (this.x < 0) {
+            this.x = 0;
+        } else if (this.x + this.width > canvas.width) {
+            this.x = canvas.width - this.width;
+        }
+        // If player is on ground, stop falling
+        if (this.y > canvas.height - this.height - 32) {
+            this.y = canvas.height - this.height - 32;
+            this.v.y = 0;
+            this.grounded = true;
+        }
+    }
+
+    isCollidingWith(platform) {
+        return this.x < platform.x + platform.width &&
+            this.x + this.width > platform.x &&
+            this.y < platform.y + platform.height &&
+            this.y + this.height > platform.y;
+    };
+
+    handleCollision(platform) {
+        // Only handle collision if the player is above the platform
+        if (this.y + this.height <= platform.y + platform.height) {
+            this.y = platform.y - this.height;
+            this.v.y = 0;
+            this.grounded = true;
+        }
     }
 
     update() {
-    // Gravity & Player velocity
-        this.v.y += this.gravity;
-        this.x += this.v.x;
-        this.y += this.v.y;
-
-    // Collision with the canvas edges
-        // Left & Right
-        if (this.x < 0) {
-            this.x = 0;
-        }
-        if (this.x + this.width > canvas.width) {
-            this.x = canvas.width - this.width;
-        }
-        // Bottom
-        if (this.y + this.height > canvas.height) {
-            this.y = canvas.height - this.height;
-            this.v.y = 0;}
-
-    // Collision detection with Collision Blocks
-        for (let i = 0; i < this.collisionBlocks.length; i++) {
-            const block = this.collisionBlocks[i];
-            // Check if player is colliding with a block
-            if (this.x < block.side.right &&
-                this.x + this.width > block.side.left &&
-                this.y < block.side.bottom &&
-                this.y + this.height > block.side.top) {
-                    // Top collision
-                    if (this.v.y > 0 && this.y + this.height - this.v.y <= block.y) {
-                        this.v.y = 0;
-                        this.y = block.y - this.height;
-                    }
-                    // Bottom collision
-                    else if (
-                        this.v.y < 0 &&
-                        this.y - this.v.y >= block.y + block.height
-                    ) {
-                        this.v.y = 0;
-                        this.y = block.y + block.height;
-                    }
-                    // Left collision
-                    if (this.v.x > 0 && this.x + this.width - this.v.x <= block.x) {
-                        this.v.x = 0;
-                        this.x = block.x - this.width;
-                    }
-                    // Right collision
-                    else if (
-                        this.v.x < 0 &&
-                        this.x - this.v.x >= block.x + block.width
-                    ) {
-                        this.v.x = 0;
-                        this.x = block.x + block.width;
-                }     
+        // Apply gravity
+        this.v.y += gravity;
+        this.grounded = false;
+        // Check for collisions with platforms
+        for (const platform of this.collisionBlocks) {
+            if (this.isCollidingWith(platform)) {
+                this.handleCollision(platform);
+                break;
             }
+        }
+        // Update the player's position
+        this.updatePosition();
+        this.checkBounds();
+        // If the player is grounded, make them jump
+        if (this.grounded && !this.dead) { // If player.dead, stop jumping
+            this.jump();
+        }
+        // If the player is falling, set playerState to "fall"
+        if (this.v.y > 0) {
+            this.playerState = "fall";
+        }
+        // If the player is dead, set playerState to "dizzy"
+        if (this.dead) {
+            this.playerState = "dizzy";
         }
     }
 }
 
-export {Player}
+export { Player };

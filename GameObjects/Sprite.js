@@ -1,14 +1,15 @@
-import { ctx, canvas } from "../main.js";
+import { ctx, canvas } from "../game.js";
+import { GameObject } from "./GameObject.js";
 
-class Sprite {
-    constructor(x, y, imgSrc) {
-        this.x = x;
-        this.y = y;
+class Sprite extends GameObject{
+    constructor(x, y, width, height, imgSrc) {
+        super(x, y, width, height);
         this.image = new Image();
         this.image.src = imgSrc;
     }
+
     draw() {
-        ctx.drawImage(this.image, this.x, this.y, canvas.width, canvas.height);
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
 };
 
