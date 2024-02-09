@@ -1,5 +1,13 @@
 import { birdEnemies } from "../game.js";
+import { startTimer } from "./scoreboard.js";
 
+// Start Screen
+const startScreen = document.getElementById('start-screen');
+const startBtn = document.getElementById('start-btn');
+const helpBtn = document.getElementById('help-btn');
+// Help Screen
+const helpScreen = document.getElementById('help-screen');
+const backBtnHelp = document.getElementById('back-btn-help');
 // Scoreboard
 const scoreBoard = document.getElementById('score-board');
 const time = document.getElementById('timer');
@@ -19,5 +27,14 @@ function gameOver() {
     finalTime.innerText = time.innerText; // show time
     finalScore.innerText = birdEnemies.playerScore; // show score
 }
+
+restartBtn.addEventListener('click', () => {
+    gameOverScreen.style.display = 'none';
+    startGame();
+});
+backBtnGameOver.addEventListener('click', () => {
+    gameOverScreen.style.display = 'none';
+    startScreen.style.display = 'flex';
+});
 
 export { gameOver, gameIsOver };

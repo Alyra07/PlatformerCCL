@@ -3,7 +3,7 @@ import { Player } from './GameObjects/Player.js';
 import { platforms } from './GameObjects/Platform.js';
 import { BirdEnemy, GroundEnemy } from './GameObjects/Enemy.js';
 import { Sprite } from './GameObjects/Sprite.js';
-import { gameOver } from './out-of-canvas/screens.js';
+import { gameOver, gameIsOver } from './out-of-canvas/screens.js';
 
 // Canvas Setup
 const canvas = document.getElementById('canvas');
@@ -52,6 +52,7 @@ function gameLoop() {
     platforms[i].update();
     platforms[i].draw();
   }
+
   // Update and draw player
   player.update();
   player.draw();
@@ -61,13 +62,15 @@ function gameLoop() {
   birdEnemies.update();
   birdEnemies.checkCollision(player);
   birdEnemies.deleteEnemy();
+
   // Draw & Update Car Enemies
   carEnemies.handleCars(3);
   carEnemies.update();
   carEnemies.checkCollision(player);
   carEnemies.deleteEnemy();
+
   // Game Over if player collides with a car
-  if (carEnemies.collisionsGameOver === 0) {
+  if (carEnemies.collisionsGameOver === 0 || gameIsOver) {
     // Clear canvas
     carEnemies.enemies = [];
     birdEnemies.enemies = [];
@@ -76,7 +79,7 @@ function gameLoop() {
     // Draw player "dead"
     player.dead = true;
     player.draw();
-    gameOver(); // game over screen
+    gameOver(); // show game over screen
   }
 
   requestAnimationFrame(gameLoop);
