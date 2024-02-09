@@ -5,6 +5,7 @@ const score = document.getElementById('score');
 const time = document.getElementById('timer');
 let counter = 0;
 
+// Reset Timer and start counting
 function startTimer() {
   let timer = null;
   counter = 0;

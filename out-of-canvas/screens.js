@@ -5,9 +5,14 @@ import { startTimer } from "./scoreboard.js";
 const startScreen = document.getElementById('start-screen');
 const startBtn = document.getElementById('start-btn');
 const helpBtn = document.getElementById('help-btn');
+3
 // Help Screen
 const helpScreen = document.getElementById('help-screen');
 const backBtnHelp = document.getElementById('back-btn-help');
+const birdImgHelp = document.getElementById('bird-example-img');
+birdImgHelp.src = '../img/bird-help.png';
+const carImgHelp = document.getElementById('car-example-img');
+carImgHelp.src = '../img/car-help.png';
 // Scoreboard
 const scoreBoard = document.getElementById('score-board');
 const score = document.getElementById('score');
@@ -27,7 +32,8 @@ startBtn.addEventListener('click', () => {
 });
 
 function startGame() {
-    gameIsOver = false;
+    gameIsOver = false; // enables gameLoop in game.js
+    // Reset scoreboard
     birdEnemies.playerScore = 0;
     score.innerText = '0';
     time.innerText = '00:00';
@@ -37,7 +43,7 @@ function startGame() {
 
 // GAME OVER ----------------------------------------------------------------
 function gameOver() {
-    gameIsOver = true; // clear timer in scoreboard.js & change gameLoop
+    gameIsOver = true; // Clear timer in scoreboard.js & switch loop in game.js
     scoreBoard.style.display = 'none';
     gameOverScreen.style.display = 'flex';
     finalTime.innerText = time.innerText; // show time
@@ -50,6 +56,17 @@ restartBtn.addEventListener('click', () => {
 });
 backBtnGameOver.addEventListener('click', () => {
     gameOverScreen.style.display = 'none';
+    startScreen.style.display = 'flex';
+});
+
+// HELP --------------------------------------------------------------
+helpBtn.addEventListener('click', () => {
+    startScreen.style.display = 'none';
+    helpScreen.style.display = 'flex';
+});
+
+backBtnHelp.addEventListener('click', () => {
+    helpScreen.style.display = 'none';
     startScreen.style.display = 'flex';
 });
 
