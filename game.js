@@ -3,6 +3,7 @@ import { Player } from './GameObjects/Player.js';
 import { platforms } from './GameObjects/Platform.js';
 import { BirdEnemy, GroundEnemy } from './GameObjects/Enemy.js';
 import { Sprite } from './GameObjects/Sprite.js';
+import { gameOver } from './out-of-canvas/screens.js';
 
 // Canvas Setup
 const canvas = document.getElementById('canvas');
@@ -13,7 +14,6 @@ canvas.height = 768;
 // Game Objects
 
 const player = new Player(50, canvas.height - 50, 50, 50, 'blue', {collisionBlocks: platforms});
-
 const birdEnemies = new BirdEnemy();
 const carEnemies = new GroundEnemy();
 
@@ -23,7 +23,7 @@ const backgroundImg = new Sprite(0, 0, canvas.width, canvas.height, './img/backg
 // Keys
 const keys = {
   ArrowRight: false,
-  ArrowLeft: false, };
+  ArrowLeft: false };
 
 // Event Listeners for player movement
 document.addEventListener('keydown', (event) => {
@@ -66,6 +66,18 @@ function gameLoop() {
   carEnemies.update();
   carEnemies.checkCollision(player);
   carEnemies.deleteEnemy();
+  // Game Over if player collides with a car
+  if (carEnemies.collisionsGameOver === 0) {
+    // Clear canvas
+    carEnemies.enemies = [];
+    birdEnemies.enemies = [];
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    backgroundImg.draw();
+    // Draw player "dead"
+    player.dead = true;
+    player.draw();
+    gameOver(); // game over screen
+  }
 
   requestAnimationFrame(gameLoop);
 }

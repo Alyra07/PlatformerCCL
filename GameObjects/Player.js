@@ -6,7 +6,7 @@ import { GameObject } from './GameObject.js';
 const jumpSpeed = -15;
 const gravity = 0.5;
 
-// Player Sprite Animation States
+// Player Sprite Animation States & Frames
 const animationStates = [
     {name: "idle", frames: 7},
     {name: "jump", frames: 7},
@@ -28,6 +28,7 @@ class Player extends GameObject {
         this.speed = 5;  // Adjust the moving speed of the player
         this.grounded = false;
         this.collisionBlocks = collisionBlocks;
+        this.dead = false; // Added dead property
 
         // Player Spritesheet
         this.image = new Image();
@@ -85,13 +86,17 @@ class Player extends GameObject {
     }
 
     moveRight() {
-        this.v.x = this.speed;
-        this.playerState = "run";
+        if (!this.dead) { // Added condition to check if player is dead
+            this.v.x = this.speed;
+            if (this.playerState !== "fall") this.playerState = "run";
+        }
     }
 
     moveLeft() {
-        this.v.x = -this.speed;
-        this.playerState = "run";	
+        if (!this.dead) { // Added condition to check if player is dead
+            this.v.x = -this.speed;
+            if (this.playerState !== "fall") this.playerState = "run";
+        }
     }
 
     stopHorizontalMovement() {
@@ -99,9 +104,10 @@ class Player extends GameObject {
     }
 
     jump() {
-        if (this.grounded) {
+        if (this.grounded && !this.dead) { // Added condition to check if player is dead
             this.playerState = "jump";
-            this.v.y = jumpSpeed; }
+            this.v.y = jumpSpeed;
+        }
     }
 
     updatePosition() {
@@ -155,8 +161,16 @@ class Player extends GameObject {
         this.updatePosition();
         this.checkBounds();
         // If the player is grounded, make them jump
-        if (this.grounded) {
+        if (this.grounded && !this.dead) { // Added condition to check if player is dead
             this.jump();
+        }
+        // If the player is falling, set playerState to "fall"
+        if (this.v.y > 0) {
+            this.playerState = "fall";
+        }
+        // If the player is dead, set playerState to "dizzy"
+        if (this.dead) {
+            this.playerState = "dizzy";
         }
     }
 }

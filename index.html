@@ -8,14 +8,14 @@
 </head>
 
 <body>
-  <div class="start-screen">
+  <div id="start-screen">
     <h1 class="game-title">Purrfect Bounce</h1>
-    <button class="start-btn">Start Game</button>
-    <button class="help-btn">How to Play</button>
+    <button id="start-btn">Start Game</button>
+    <button id="help-btn">How to Play</button>
   </div>
 
-  <div class="ingame-screen">
-    <div class="score-board">
+  <div id="ingame-screen">
+    <div id="score-board">
       <h1 class="game-title">Purrfect Bounce</h1>
       <h2 class="score"><span id="score">0</span> Birds eaten</h2>
       <h2 id="timer">00:00</h2>
@@ -24,19 +24,22 @@
     <canvas id="canvas"></canvas>
   </div>
 
-  <div class="help-screen">
+  <div id="help-screen">
     <h2>How to Play:</h2>
     <p class="instructions">Use the right & left arrow keys to move the cat and eat the birds. Avoid the cars!</p>
     <p class="instructions">The longer the game runs, the windier it gets, and the bouncy cloud-platforms move faster.</p>
-    <button class="back-btn">Back to Menu</button>
+    <button class="back-btn" id="back-help">Back to Menu</button>
   </div>
 
-  <div class="game-over-screen">
+  <div id="game-over-screen">
     <h1>Game Over</h1>
-    <h2 class="score">Mr. Fluffington has eaten <span id="final-score">0</span> birds!</h2>
+    <h2 class="score">
+      Mr. Fluffington has eaten <span id="final-score">0</span> Birds 
+      in <span id="final-time"></span> minutes!
+    </h2>
     <h3>Purrfect!</h3>
-    <button class="restart-btn">Restart Game</button>
-    <button class="back-btn">Back to Menu</button>
+    <button id="restart-btn">Restart Game</button>
+    <button class="back-btn" id="back-btn-end">Back to Menu</button>
   </div>
 
   
