@@ -28,7 +28,7 @@ class Player extends GameObject {
         this.speed = 5;  // Adjust the moving speed of the player
         this.grounded = false;
         this.collisionBlocks = collisionBlocks;
-        this.dead = false; // Added dead property
+        this.dead = false; // Player alive per default
 
         // Player Spritesheet
         this.image = new Image();
@@ -103,8 +103,9 @@ class Player extends GameObject {
         this.v.x = 0;
     }
 
-    jump() {
-        if (this.grounded && !this.dead) { // Added condition to check if player is dead
+    jump() { // jumps constantly if moved while alive
+        if (this.grounded && !this.dead 
+            && this.playerState !== "idle") {
             this.playerState = "jump";
             this.v.y = jumpSpeed;
         }

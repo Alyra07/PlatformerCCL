@@ -12,13 +12,10 @@ canvas.width = 1024;
 canvas.height = 768;
 
 // Game Objects
-
+const backgroundImg = new Sprite(0, 0, canvas.width, canvas.height, './img/background.png');
 const player = new Player(50, canvas.height - 50, 50, 50, 'blue', { collisionBlocks: platforms });
 const birdEnemies = new BirdEnemy();
 const carEnemies = new GroundEnemy();
-
-// Contant images
-const backgroundImg = new Sprite(0, 0, canvas.width, canvas.height, './img/background.png');
 
 // Keys
 const keys = {
@@ -54,8 +51,9 @@ function gameLoop() {
     player.dead = true; // stop player movement
     // Clear Game Objects
     platforms.length = 0;
-    carEnemies.enemies = [];
     birdEnemies.enemies = [];
+    carEnemies.enemies = [];
+    carEnemies.collisionsGameOver = 1;
     // Stop gameLoop
     gameOverLoop();
     return;
@@ -87,8 +85,6 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
-// Start the gameLoop
-gameLoop();
 
 // Game Over Loop -------------------
 function gameOverLoop() {
@@ -99,8 +95,12 @@ function gameOverLoop() {
     player.draw();
     player.update();
     requestAnimationFrame(gameOverLoop);
-  } else return; // stop loop if game started again
+  } else if (!gameIsOver) {
+    player.dead = false;
+    gameLoop();
+  }
 }
+gameOverLoop(); // Start loop for gameIsOver = true
 
 export { canvas, ctx };
 export { birdEnemies };

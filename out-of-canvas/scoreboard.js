@@ -7,6 +7,7 @@ let counter = 0;
 
 function startTimer() {
   let timer = null;
+  counter = 0;
   timer = setInterval(() => {
     // Clear timer when game is over
     if (time.innerText === '05:00' || gameIsOver) {
@@ -18,7 +19,6 @@ function startTimer() {
     }
   }, 1000);
 }
-startTimer();
 
 // Update time in minutes and seconds
 function updateTime() {
