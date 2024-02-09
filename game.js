@@ -20,8 +20,6 @@ const carEnemies = new GroundEnemy();
 // Contant images
 const backgroundImg = new Sprite(0, 0, canvas.width, canvas.height, './img/background.png');
 
-// Spawn Platform every second
-
 // Keys
 const keys = {
   ArrowRight: false,

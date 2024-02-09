@@ -31,7 +31,7 @@ class Player extends GameObject {
 
         // Player Spritesheet
         this.image = new Image();
-        this.image.src = "../img/shadow_dog.png";
+        this.image.src = "../img/player_sprite.png";
         this.sx = 0; // Source x & y position
         this.sy = 0;
         this.sw = 575; // Source width & height
@@ -54,11 +54,18 @@ class Player extends GameObject {
             spriteAnimations[state.name] = frames;
         })
     }
+    updateGameFrame() {
+        this.gameFrame++;
+        if (this.gameFrame > spriteAnimations[this.playerState].loc.length * this.staggerFrames) {
+          this.gameFrame = 0;
+        }
+    }
 
     // Call Sprite animation & draw the correct frame
     draw() {
         this.animate();
-        let position = Math.floor(this.gameFrame/this.staggerFrames) % spriteAnimations[this.playerState].loc.length;
+        this.updateGameFrame(); // next frame
+        let position = Math.floor(this.gameFrame / this.staggerFrames) % spriteAnimations[this.playerState].loc.length;
         let frameX = this.sw * position;
         let frameY = spriteAnimations[this.playerState].loc[position].y;
     
