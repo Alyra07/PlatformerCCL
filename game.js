@@ -40,6 +40,22 @@ document.addEventListener('keyup', (event) => {
   }
 });
 
+// Game Over Loop -------------------
+function gameOverLoop() {
+  if (gameIsOver) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    backgroundImg.draw();
+    // Draw player "dead"
+    player.draw();
+    player.update();
+    requestAnimationFrame(gameOverLoop);
+  } else if (!gameIsOver) {
+    player.dead = false; // enable player movement
+    gameLoop();
+  }
+}
+gameOverLoop(); // Start loop for gameIsOver = true (default)
+
 // GAME LOOP -----------------------------------------------------------------
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -85,22 +101,6 @@ function gameLoop() {
 
   requestAnimationFrame(gameLoop);
 }
-
-// Game Over Loop -------------------
-function gameOverLoop() {
-  if (gameIsOver) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    backgroundImg.draw();
-    // Draw player "dead"
-    player.draw();
-    player.update();
-    requestAnimationFrame(gameOverLoop);
-  } else if (!gameIsOver) {
-    player.dead = false;
-    gameLoop();
-  }
-}
-gameOverLoop(); // Start loop for gameIsOver = true
 
 export { canvas, ctx };
 export { birdEnemies };

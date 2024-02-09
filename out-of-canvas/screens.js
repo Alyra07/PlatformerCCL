@@ -18,7 +18,7 @@ let finalScore = document.getElementById('final-score');
 let finalTime = document.getElementById('final-time');
 const restartBtn = document.getElementById('restart-btn');
 const backBtnGameOver = document.getElementById('back-btn-end');
-let gameIsOver = true;
+let gameIsOver = true; // enables gameOverLoop in game.js
 
 // START GAME ---------------------------------------------------------------
 startBtn.addEventListener('click', () => {
