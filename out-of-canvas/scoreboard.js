@@ -10,11 +10,11 @@ function startTimer() {
   let timer = null;
   counter = 0;
   timer = setInterval(() => {
-    // Clear timer when game is over
-    if (time.innerText === '02:00' || gameIsOver) {
+    // Clear timer when game is over at specific time
+    if (time.innerText === '03:00' || gameIsOver) {
       clearInterval(timer);
       gameOver();
-    } else { 
+    } else {
       counter++;
       updateTime();
     }
@@ -30,7 +30,7 @@ function updateTime() {
 
 // used in BirdEnemy.deleteEnemy() --> +1 Score
 function updateScore() {
-    score.innerText = birdEnemies.playerScore;
+  score.innerText = birdEnemies.playerScore;
 }
 
 export { updateScore };

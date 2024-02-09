@@ -54,7 +54,6 @@ class Platform extends GameObject {
   }
 
   update() {
-    // Increase speed exponentially based on the current time
     const timeFactor = Math.pow(1.05, counter / 5); // Increase speed exponentially every 5 seconds
     this.x -= this.speed * timeFactor;
   }

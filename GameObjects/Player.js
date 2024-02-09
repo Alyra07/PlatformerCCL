@@ -1,4 +1,3 @@
-// Player.js
 import { canvas, ctx } from '../game.js';
 import { GameObject } from './GameObject.js';
 
@@ -38,7 +37,7 @@ class Player extends GameObject {
         this.sw = 575; // Source width & height
         this.sh = 523;
         this.gameFrame = 0;
-        this.playerState = "idle"; // initial Animarion State
+        this.playerState = "idle"; // startScreen Animation State
         // Slow or speed up animation of Player Sprite
         this.staggerFrames = 5;
     }
@@ -86,14 +85,14 @@ class Player extends GameObject {
     }
 
     moveRight() {
-        if (!this.dead) { // Added condition to check if player is dead
+        if (!this.dead) { // check if player is dead -> cannot move while dead
             this.v.x = this.speed;
             if (this.playerState !== "fall") this.playerState = "run";
         }
     }
 
     moveLeft() {
-        if (!this.dead) { // Added condition to check if player is dead
+        if (!this.dead) { 
             this.v.x = -this.speed;
             if (this.playerState !== "fall") this.playerState = "run";
         }

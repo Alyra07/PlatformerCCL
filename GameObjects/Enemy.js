@@ -1,9 +1,9 @@
-import {GameObject} from "./GameObject.js";
-import {ctx, canvas} from "../game.js";
-import {updateScore} from "../out-of-canvas/scoreboard.js";
+import { GameObject } from "./GameObject.js";
+import { ctx, canvas } from "../game.js";
+import { updateScore } from "../out-of-canvas/scoreboard.js";
 
 class Enemy extends GameObject {
-    constructor(){
+    constructor() {
         super();
         this.enemies = [];
         this.image = new Image();
@@ -19,20 +19,22 @@ class Enemy extends GameObject {
     }
 
     draw() {
-        ctx.drawImage(this.image, this.frame.x * this.width, 0, this.width, this.height, 
+        ctx.drawImage(this.image, this.frame.x * this.width, 0, this.width, this.height,
             this.x, this.y, this.width, this.height);
     }
 
-    update(){
+    update() {
         this.x -= this.v.x;
         this.y += this.v.y;
         // Sprite animation
         if (this.frameTimer > this.frameInterval) {
             this.frameTimer = 0;
             if (this.frame.x < this.maxFrame) {
-                this.frame.x++;} 
+                this.frame.x++;
+            }
             else {
-                this.frame.x = 0;}
+                this.frame.x = 0;
+            }
         }
         else {
             this.frameTimer += this.deltaTime;
@@ -41,10 +43,10 @@ class Enemy extends GameObject {
     // Collision detection with Player - Mark Enemy for Deletion
     checkCollision(player) {
         this.enemies.forEach((enemy) => {
-        if (enemy.x < player.x + player.width &&
-            enemy.x + enemy.width > player.x &&
-            enemy.y < player.y + player.height &&
-            enemy.y + enemy.height > player.y) {
+            if (enemy.x < player.x + player.width &&
+                enemy.x + enemy.width > player.x &&
+                enemy.y < player.y + player.height &&
+                enemy.y + enemy.height > player.y) {
                 enemy.collision = true;
             }
         })
@@ -52,7 +54,7 @@ class Enemy extends GameObject {
 }
 
 class BirdEnemy extends Enemy {
-    constructor(){
+    constructor() {
         super();
         this.x = canvas.width;
         this.y = Math.random() * (canvas.height - 200); // Randomize Bird Spawn Height
@@ -74,14 +76,14 @@ class BirdEnemy extends Enemy {
     }
 
     // Draw Bird Enemy for each Bird in Array
-    update(deltaTime){
+    update(deltaTime) {
         super.update(deltaTime) // Movement & Sprite animation
         this.enemies.forEach((bird) => {
             bird.draw();
         })
     };
 
-    addBirds(){
+    addBirds() {
         this.enemies.push(new BirdEnemy());
     };
 
@@ -119,7 +121,7 @@ class GroundEnemy extends Enemy {
         this.width = 120;
         this.height = 85;
         this.x = 0 - this.width;
-        this.y = canvas.height - (this.height +32);
+        this.y = canvas.height - (this.height + 32);
         this.v = {
             x: -3,
             y: 0
@@ -134,14 +136,14 @@ class GroundEnemy extends Enemy {
         this.deltaTime = 3;
     }
     // Draw Car for each GroundEnemy in Array
-    update(deltaTime){
+    update(deltaTime) {
         super.update(deltaTime) // Movement & Sprite animation
         this.enemies.forEach((car) => {
             car.draw();
         })
     };
 
-    addCars(){
+    addCars() {
         this.enemies.push(new GroundEnemy());
     };
 
@@ -157,12 +159,13 @@ class GroundEnemy extends Enemy {
             car.update(deltaTime);
         })
     };
-    
+
     // Delete Cars that are off screen or have collided with Player
     deleteEnemy() {
         this.enemies.forEach((car, index) => {
             if (car.x > canvas.width + car.width) {
-                this.enemies.splice(index, 1);}
+                this.enemies.splice(index, 1);
+            }
             // Game Over if player collides with a car
             else if (car.collision === true) {
                 // this.enemies.splice(index, 1);
@@ -172,4 +175,4 @@ class GroundEnemy extends Enemy {
     }
 }
 
-export {BirdEnemy, GroundEnemy}
+export { BirdEnemy, GroundEnemy }

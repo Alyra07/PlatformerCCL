@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +15,7 @@
     <button id="help-btn">How to Play</button>
   </div>
 
-  <div id="ingame-screen">
+  <div id="game-screen">
     <div id="score-board">
       <h1 class="game-title">Purrfect Bounce</h1>
       <h2 class="score"><span id="score">0</span> Birds eaten</h2>
@@ -27,8 +28,8 @@
   <div id="help-screen">
     <h1>How to Play:</h1>
     <img id="bird-example-img" alt="bird enemy example">
-    <h2 class="instructions">Use the right & left arrow keys to move the cat and eat the birds.
-      <br> You have 2 minutes to eat as many birds as you can.
+    <h2 class="instructions">Use &#129136; &#129138; keys to coordinate Mr. Fluffington's bounces.
+      <br> You have 3 minutes to eat as many birds as you can.
     </h2>
     <img id="car-example-img" alt="car enemy example">
     <h2 class="instructions">Avoid the cars!</h2>
@@ -42,7 +43,7 @@
   <div id="game-over-screen">
     <h1>Game Over</h1>
     <h2 class="score">
-      Mr. Fluffington has eaten <span id="final-score">0</span> Birds 
+      Mr. Fluffington has eaten <span id="final-score">0</span> Birds
       in <span id="final-time"></span> minutes!
     </h2>
     <h2>Purrfect!</h2>
@@ -50,9 +51,10 @@
     <button class="back-btn" id="back-btn-end">Back to Menu</button>
   </div>
 
-  
+
   <script src="./out-of-canvas/screens.js"></script>
   <script src="game.js" type="module"></script>
   <script src="./out-of-canvas/scoreboard.js"></script>
 </body>
+
 </html>

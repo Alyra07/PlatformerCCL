@@ -21,19 +21,88 @@ button {
   color: white;
   cursor: pointer;
 }
+
 button:hover {
-  background-color: rgb(84, 104, 122);
+  background-color: rgba(101, 140, 175, 0.8);
   font-weight: bold;
 }
 
 h1 {
   font-size: 2.5rem;
+  background-color: rgb(84, 117, 146);
+  color: white;
+  border-radius: 25px;
+  padding: 10px;
 }
+
 h2 {
   font-size: 1.5rem;
 }
+
 h3 {
   font-size: 1.3rem;
+}
+
+/* GAME SCREEN */
+#game-screen {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#canvas {
+  position: absolute;
+  border: 3px solid rgb(106, 71, 131);
+}
+
+#score-board {
+  position: absolute;
+  display: none;
+  padding: 15px;
+  margin: 0 auto;
+  left: -800px;
+  top: -390px;
+  flex-direction: column;
+  color: black;
+  text-align: center;
+  width: 250px;
+  height: 250px;
+  z-index: 1;
+  overflow: hidden;
+  /* Hide the overflow of pseudo-element */
+}
+
+#score-board::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("./img/clouds-box.png") no-repeat;
+  background-size: 100%;
+  background-position: center;
+  filter: blur(2px);
+  /* Add a blur effect to clouds box */
+  z-index: -1;
+  /* Place pseudo-element behind content */
+}
+
+#score-board h1 {
+  margin-bottom: 15px;
+  background-color: rgba(248, 237, 254, 0.3);
+  color: black;
+  padding: 0;
+  padding-top: 10px;
+  font-size: 1.8rem;
+}
+
+#score-board h2 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  background-color: rgba(248, 237, 254, 0.3);
 }
 
 /* START SCREEN */
@@ -51,37 +120,6 @@ h3 {
   z-index: 1;
 }
 
-/* GAME SCREEN */
-#game-screen {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-#canvas {
-  border: 3px solid rgb(106, 71, 131);
-}
-
-#score-board {
-  position: absolute;
-  display: none;
-  padding: 15px;
-  left: 10px;
-  top: 70px;
-  flex-direction: column;
-  background-color: rgba(200, 164, 219, 0.768);
-  color: black;
-}
-#score-board h1 {
-  margin-bottom: 15px;
-  font-size: 1.8rem;
-}
-#score-board h2 {
-  margin-bottom: 10px;
-  font-size: 1.5rem;
-}
 
 /* HELP SCREEN */
 #help-screen {

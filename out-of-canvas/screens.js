@@ -5,7 +5,6 @@ import { startTimer } from "./scoreboard.js";
 const startScreen = document.getElementById('start-screen');
 const startBtn = document.getElementById('start-btn');
 const helpBtn = document.getElementById('help-btn');
-3
 // Help Screen
 const helpScreen = document.getElementById('help-screen');
 const backBtnHelp = document.getElementById('back-btn-help');
@@ -33,7 +32,7 @@ startBtn.addEventListener('click', () => {
 
 function startGame() {
     gameIsOver = false; // enables gameLoop in game.js
-    // Reset scoreboard
+    // Reset scoreboard (score & time)
     birdEnemies.playerScore = 0;
     score.innerText = '0';
     time.innerText = '00:00';

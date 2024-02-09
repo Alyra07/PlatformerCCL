@@ -1,4 +1,3 @@
-// game.js
 import { Player } from './GameObjects/Player.js';
 import { platforms } from './GameObjects/Platform.js';
 import { BirdEnemy, GroundEnemy } from './GameObjects/Enemy.js';
@@ -61,7 +60,7 @@ function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   backgroundImg.draw();
 
-// Game Over if player collides with a car
+  // Game Over if player collides with a car
   if (carEnemies.collisionsGameOver === 0 || gameIsOver) {
     gameOver(); // show game over screen
     player.dead = true; // stop player movement
@@ -74,7 +73,7 @@ function gameLoop() {
     gameOverLoop();
     return;
   }
-// Ingame Loop ----------------------
+  // Ingame Loop ----------------------
   else {
     // Update and draw platforms
     for (let i = 0; i < platforms.length; i++) {
