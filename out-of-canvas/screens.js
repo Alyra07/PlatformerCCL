@@ -1,5 +1,4 @@
 import { birdEnemies } from "../game.js";
-import { startTimer } from "./scoreboard.js";
 
 // Start Screen
 const startScreen = document.getElementById('start-screen');
@@ -21,7 +20,7 @@ let gameIsOver = null;
 
 // GAME OVER ----------------------------------------------------------------
 function gameOver() {
-    gameIsOver = true; // clear Timer in scoreboard.js
+    gameIsOver = true; // clear timer in scoreboard.js & change gameLoop
     scoreBoard.style.display = 'none';
     gameOverScreen.style.display = 'flex';
     finalTime.innerText = time.innerText; // show time

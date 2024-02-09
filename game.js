@@ -13,7 +13,7 @@ canvas.height = 768;
 
 // Game Objects
 
-const player = new Player(50, canvas.height - 50, 50, 50, 'blue', {collisionBlocks: platforms});
+const player = new Player(50, canvas.height - 50, 50, 50, 'blue', { collisionBlocks: platforms });
 const birdEnemies = new BirdEnemy();
 const carEnemies = new GroundEnemy();
 
@@ -23,7 +23,8 @@ const backgroundImg = new Sprite(0, 0, canvas.width, canvas.height, './img/backg
 // Keys
 const keys = {
   ArrowRight: false,
-  ArrowLeft: false };
+  ArrowLeft: false
+};
 
 // Event Listeners for player movement
 document.addEventListener('keydown', (event) => {
@@ -47,46 +48,59 @@ function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   backgroundImg.draw();
 
-  // Update and draw platforms
-  for (let i = 0; i < platforms.length; i++) {
-    platforms[i].update();
-    platforms[i].draw();
-  }
-
-  // Update and draw player
-  player.update();
-  player.draw();
-
-  // Draw & Update Bird Enemies
-  birdEnemies.handleBirds(2);
-  birdEnemies.update();
-  birdEnemies.checkCollision(player);
-  birdEnemies.deleteEnemy();
-
-  // Draw & Update Car Enemies
-  carEnemies.handleCars(3);
-  carEnemies.update();
-  carEnemies.checkCollision(player);
-  carEnemies.deleteEnemy();
-
   // Game Over if player collides with a car
   if (carEnemies.collisionsGameOver === 0 || gameIsOver) {
-    // Clear canvas
+    gameOver(); // show game over screen
+    player.dead = true; // stop player movement
+    // Clear Game Objects
+    platforms.length = 0;
     carEnemies.enemies = [];
     birdEnemies.enemies = [];
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    backgroundImg.draw();
-    // Draw player "dead"
-    player.dead = true;
+    // Stop gameLoop
+    gameOverLoop();
+    return;
+  }
+// Ingame Loop ----------------------
+  else {
+    // Update and draw platforms
+    for (let i = 0; i < platforms.length; i++) {
+      platforms[i].update();
+      platforms[i].draw();
+    }
+
+    // Update and draw player
+    player.update();
     player.draw();
-    gameOver(); // show game over screen
+
+    // Draw & Update Bird Enemies
+    birdEnemies.handleBirds(2);
+    birdEnemies.update();
+    birdEnemies.checkCollision(player);
+    birdEnemies.deleteEnemy();
+
+    // Draw & Update Car Enemies
+    carEnemies.handleCars(3);
+    carEnemies.update();
+    carEnemies.checkCollision(player);
+    carEnemies.deleteEnemy();
   }
 
   requestAnimationFrame(gameLoop);
 }
-
-// Start the game loop
+// Start the gameLoop
 gameLoop();
+
+// Game Over Loop -------------------
+function gameOverLoop() {
+  if (gameIsOver) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    backgroundImg.draw();
+    // Draw player "dead"
+    player.draw();
+    player.update();
+    requestAnimationFrame(gameOverLoop);
+  } else return; // stop loop if game started again
+}
 
 export { canvas, ctx };
 export { birdEnemies };
