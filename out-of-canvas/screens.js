@@ -29,6 +29,7 @@ const soundtrack = document.getElementById('soundtrack');
 soundtrack.volume = 0.7;
 soundtrack.play();
 });
+
 const gameOverSound = document.getElementById('game-over-sound');
 gameOverSound.volume = 0.4;
 
