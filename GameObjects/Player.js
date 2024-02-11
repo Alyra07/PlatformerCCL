@@ -3,6 +3,8 @@ import { GameObject } from './GameObject.js';
 
 // Player Physics Constants
 const jumpSpeed = -15;
+const jumpSound = document.getElementById('bounce-sound');
+jumpSound.volume = 0.2;
 const gravity = 0.5;
 
 // Player Sprite Animation States & Frames
@@ -106,6 +108,7 @@ class Player extends GameObject {
         if (this.grounded && !this.dead 
             && this.playerState !== "idle") {
             this.playerState = "jump";
+            jumpSound.play();
             this.v.y = jumpSpeed;
         }
     }

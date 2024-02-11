@@ -23,6 +23,14 @@ const finalTime = document.getElementById('final-time');
 const restartBtn = document.getElementById('restart-btn');
 const backBtnGameOver = document.getElementById('back-btn-end');
 let gameIsOver = true; // enables gameOverLoop in game.js
+// Soundtrack + Sound Effects
+document.addEventListener("DOMContentLoaded", function() {
+const soundtrack = document.getElementById('soundtrack');
+soundtrack.volume = 0.7;
+soundtrack.play();
+});
+const gameOverSound = document.getElementById('game-over-sound');
+gameOverSound.volume = 0.4;
 
 // START GAME ---------------------------------------------------------------
 startBtn.addEventListener('click', () => {
@@ -43,6 +51,7 @@ function startGame() {
 // GAME OVER ----------------------------------------------------------------
 function gameOver() {
     gameIsOver = true; // Clear timer in scoreboard.js & switch loop in game.js
+    gameOverSound.play();
     scoreBoard.style.display = 'none';
     gameOverScreen.style.display = 'flex';
     finalTime.innerText = time.innerText; // show time
