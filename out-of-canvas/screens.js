@@ -2,7 +2,8 @@ import { birdEnemies } from "/game.js";
 import { startTimer } from "/out-of-canvas/scoreboard.js";
 
 const soundtrack = document.getElementById('soundtrack');
-soundtrack.volume = 0.2;
+soundtrack.volume = 0.5;
+
 // Start Screen
 const startScreen = document.getElementById('start-screen');
 const startBtn = document.getElementById('start-btn');
@@ -21,7 +22,7 @@ const time = document.getElementById('timer');
 // Game Over Screen
 const gameOverScreen = document.getElementById('game-over-screen');
 const gameOverSound = document.getElementById('game-over-sound');
-gameOverSound.volume = 0.4;
+gameOverSound.volume = 0.2;
 const finalScore = document.getElementById('final-score');
 const finalTime = document.getElementById('final-time');
 const restartBtn = document.getElementById('restart-btn');
