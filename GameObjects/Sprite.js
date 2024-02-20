@@ -1,5 +1,5 @@
-import { ctx, canvas } from "../game.js";
-import { GameObject } from "./GameObject.js";
+import { ctx, canvas } from "/game.js";
+import { GameObject } from "/GameObjects/GameObject.js";
 
 class Sprite extends GameObject{
     constructor(x, y, width, height, imgSrc) {

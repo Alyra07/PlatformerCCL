@@ -1,8 +1,8 @@
-import { Player } from './GameObjects/Player.js';
-import { platforms } from './GameObjects/Platform.js';
-import { BirdEnemy, GroundEnemy } from './GameObjects/Enemy.js';
-import { Sprite } from './GameObjects/Sprite.js';
-import { gameOver, gameIsOver } from './out-of-canvas/screens.js';
+import { Player } from '/GameObjects/Player.js';
+import { platforms } from '/GameObjects/Platform.js';
+import { BirdEnemy, GroundEnemy } from '/GameObjects/Enemy.js';
+import { Sprite } from '/GameObjects/Sprite.js';
+import { gameOver, gameIsOver } from '/out-of-canvas/screens.js';
 
 // Canvas Setup
 const canvas = document.getElementById('canvas');
@@ -11,7 +11,7 @@ canvas.width = 1024;
 canvas.height = 768;
 
 // Game Objects
-const backgroundImg = new Sprite(0, 0, canvas.width, canvas.height, './img/background.png');
+const backgroundImg = new Sprite(0, 0, canvas.width, canvas.height, 'img/background.png');
 const player = new Player(50, canvas.height - 50, 50, 50, 'blue', { collisionBlocks: platforms });
 const birdEnemies = new BirdEnemy();
 const carEnemies = new GroundEnemy();

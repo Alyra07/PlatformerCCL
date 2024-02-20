@@ -1,5 +1,5 @@
-import { birdEnemies } from "../game.js";
-import { startTimer } from "./scoreboard.js";
+import { birdEnemies } from "/game.js";
+import { startTimer } from "/out-of-canvas/scoreboard.js";
 
 // Start Screen
 const startScreen = document.getElementById('start-screen');
@@ -9,9 +9,9 @@ const helpBtn = document.getElementById('help-btn');
 const helpScreen = document.getElementById('help-screen');
 const backBtnHelp = document.getElementById('back-btn-help');
 const birdImgHelp = document.getElementById('bird-example-img');
-birdImgHelp.src = '../img/bird-help.png';
+birdImgHelp.src = 'img/bird-help.png';
 const carImgHelp = document.getElementById('car-example-img');
-carImgHelp.src = '../img/car-help.png';
+carImgHelp.src = 'img/car-help.png';
 // Scoreboard
 const scoreBoard = document.getElementById('score-board');
 const score = document.getElementById('score');
@@ -24,11 +24,11 @@ const restartBtn = document.getElementById('restart-btn');
 const backBtnGameOver = document.getElementById('back-btn-end');
 let gameIsOver = true; // enables gameOverLoop in game.js
 // Soundtrack + Sound Effects
-document.addEventListener("DOMContentLoaded", function() {
-const soundtrack = document.getElementById('soundtrack');
-soundtrack.volume = 0.7;
-soundtrack.play();
-});
+window.onload = function() {
+    const soundtrack = document.getElementById('soundtrack');
+    soundtrack.volume = 0.7;
+    soundtrack.play();
+};
 
 const gameOverSound = document.getElementById('game-over-sound');
 gameOverSound.volume = 0.4;

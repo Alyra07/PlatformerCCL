@@ -1,5 +1,5 @@
-import { birdEnemies } from '../game.js';
-import { gameOver, gameIsOver } from './screens.js';
+import { birdEnemies } from '/game.js';
+import { gameOver, gameIsOver } from '/out-of-canvas/screens.js';
 
 const score = document.getElementById('score');
 const time = document.getElementById('timer');

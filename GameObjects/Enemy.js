@@ -1,6 +1,6 @@
-import { GameObject } from "./GameObject.js";
-import { ctx, canvas } from "../game.js";
-import { updateScore } from "../out-of-canvas/scoreboard.js";
+import { GameObject } from "/GameObjects/GameObject.js";
+import { ctx, canvas } from "/game.js";
+import { updateScore } from "/out-of-canvas/scoreboard.js";
 
 class Enemy extends GameObject {
     constructor() {
@@ -64,7 +64,7 @@ class BirdEnemy extends Enemy {
             x: 2,
             y: 0
         }
-        this.image.src = "../img/bird_spritesheet.png";
+        this.image.src = "img/bird_spritesheet.png";
         this.maxFrame = 5;
         this.enemies = [];
         this.enemyTimer = 0;
@@ -127,7 +127,7 @@ class GroundEnemy extends Enemy {
             y: 0
         }
         this.collisionsGameOver = 1;
-        this.image.src = "../img/car_spritesheet.png";
+        this.image.src = "img/car_spritesheet.png";
         this.maxFrame = 1;
         this.enemies = [];
         this.enemyTimer = 0;

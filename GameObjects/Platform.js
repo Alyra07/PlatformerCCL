@@ -1,6 +1,6 @@
-import { GameObject } from "./GameObject.js";
-import { canvas, ctx } from '../game.js';
-import { counter } from '../out-of-canvas/scoreboard.js';
+import { GameObject } from "/GameObjects/GameObject.js";
+import { canvas, ctx } from '/game.js';
+import { counter } from '/out-of-canvas/scoreboard.js';
 
 let platforms = []; // Array to store all platforms
 let lastPlatformY = null;
@@ -21,9 +21,9 @@ class Platform extends GameObject {
       new Image(),
       new Image()
     ];
-    this.platformImages[0].src = '../img/cloud1_w240.png';
-    this.platformImages[1].src = '../img/cloud2_w218.png';
-    this.platformImages[2].src = '../img/cloud3_w185_h37.png';
+    this.platformImages[0].src = 'img/cloud1_w240.png';
+    this.platformImages[1].src = 'img/cloud2_w218.png';
+    this.platformImages[2].src = 'img/cloud3_w185_h37.png';
     // Choose a random image and decide whether to mirror it
     this.img = this.platformImages[Math.floor(Math.random() * this.platformImages.length)];
     this.mirror = Math.random() < 0.5;

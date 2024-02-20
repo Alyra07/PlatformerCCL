@@ -1,5 +1,5 @@
-import { canvas, ctx } from '../game.js';
-import { GameObject } from './GameObject.js';
+import { canvas, ctx } from '/game.js';
+import { GameObject } from '/GameObjects/GameObject.js';
 
 // Player Physics Constants
 const jumpSpeed = -15;
@@ -33,7 +33,7 @@ class Player extends GameObject {
 
         // Player Spritesheet
         this.image = new Image();
-        this.image.src = "../img/player_sprite.png";
+        this.image.src = "img/player_sprite.png";
         this.sx = 0; // Source x & y position
         this.sy = 0;
         this.sw = 575; // Source width & height
