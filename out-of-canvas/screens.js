@@ -1,6 +1,8 @@
 import { birdEnemies } from "/game.js";
 import { startTimer } from "/out-of-canvas/scoreboard.js";
 
+const soundtrack = document.getElementById('soundtrack');
+soundtrack.volume = 0.2;
 // Start Screen
 const startScreen = document.getElementById('start-screen');
 const startBtn = document.getElementById('start-btn');
@@ -18,23 +20,17 @@ const score = document.getElementById('score');
 const time = document.getElementById('timer');
 // Game Over Screen
 const gameOverScreen = document.getElementById('game-over-screen');
+const gameOverSound = document.getElementById('game-over-sound');
+gameOverSound.volume = 0.4;
 const finalScore = document.getElementById('final-score');
 const finalTime = document.getElementById('final-time');
 const restartBtn = document.getElementById('restart-btn');
 const backBtnGameOver = document.getElementById('back-btn-end');
 let gameIsOver = true; // enables gameOverLoop in game.js
-// Soundtrack + Sound Effects
-window.onload = function() {
-    const soundtrack = document.getElementById('soundtrack');
-    soundtrack.volume = 0.7;
-    soundtrack.play();
-};
-
-const gameOverSound = document.getElementById('game-over-sound');
-gameOverSound.volume = 0.4;
 
 // START GAME ---------------------------------------------------------------
 startBtn.addEventListener('click', () => {
+    soundtrack.play();
     startScreen.style.display = 'none';
     startGame();
 });

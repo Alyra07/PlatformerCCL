@@ -10,6 +10,10 @@ const ctx = canvas.getContext('2d');
 canvas.width = 1024;
 canvas.height = 768;
 
+//Sound Effects
+const soundtrack = document.getElementById('soundtrack');
+soundtrack.volume = 0.2;
+
 // Game Objects
 const backgroundImg = new Sprite(0, 0, canvas.width, canvas.height, 'img/background.png');
 const player = new Player(50, canvas.height - 50, 50, 50, 'blue', { collisionBlocks: platforms });
